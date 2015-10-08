@@ -18,6 +18,7 @@ int exec(int op, int a, int b) {
         d=a;
         a=b;
         b=d;
+        op=-op;
     }
 
         switch ( abs(op) )

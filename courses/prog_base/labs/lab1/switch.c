@@ -1,6 +1,8 @@
+#include <math.h>
+
 int exec(int op, int a, int b) {
-   int result;
-   #define min(a,b) \
+  int result;
+  #define min(a,b) \
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
      _a < _b ? _a : _b; })
@@ -97,5 +99,4 @@ int exec(int op, int a, int b) {
                 }
                 break;
             }
-   return result;
-}
+  return result;

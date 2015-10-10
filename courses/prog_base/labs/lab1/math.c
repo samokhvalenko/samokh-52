@@ -2,7 +2,7 @@
 
 double calc(double x, double y, double z) {
     double a;
-    if (x-y == 0 || x+y == 0 || (cos(y)/sin(x)+1) == 0 )
+    if (x-y <= 0 || x < 0 || x+y == 0 || (cos(y)/sin(x)+1) == 0 )
     {
         return NAN;
     }

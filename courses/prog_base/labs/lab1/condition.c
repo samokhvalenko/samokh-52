@@ -19,7 +19,6 @@ int satisfies(int a, int b, int c) {
         if (a < 0) result1++;
         if (b < 0) result1++;
         if (c < 0) result1++;
-   g = abs (sum2);
     if (result1 == 3)
     {
     modmin = abs (min ( a, min ( b,c ) ) );
@@ -27,6 +26,7 @@ int satisfies(int a, int b, int c) {
     d = ( log(modmin) / log(2) );
     e = (int) d;
     f = d - e;
+    g = abs (sum2);
         if ( sum2 < 256 && modmin < 256 && f == 0 )
             {
                 result = 1;
@@ -64,6 +64,10 @@ int satisfies(int a, int b, int c) {
             else if (max( a, max( b,c ) ) % min( a, min( b,c ) ) == 0 || (max( a, max( b,c ) ) == 0 && min( a, min( b,c ) ) != 0) )
             {
                 result = 1;
+            }
+            else
+            {
+                result = 0;
             }
         }
 

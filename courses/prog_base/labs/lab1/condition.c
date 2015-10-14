@@ -65,6 +65,10 @@ int satisfies(int a, int b, int c) {
             {
                 result = 1;
             }
+            else
+            {
+                result = 0;
+            }
         }
 
    return result;

@@ -86,7 +86,7 @@ int exec(int op, int a, int b) {
                          break;
                     }
         case 11:
-            result = 4 * PI * cos( 2 * a * b)/a;
+            result = PI * ((a + b) % 6) / b;
             break;
         default:
             if ( op < 100)

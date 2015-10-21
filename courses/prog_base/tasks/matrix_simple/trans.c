@@ -16,8 +16,9 @@ void fillRand(int mat[4][4])
      }
    }
 }
-void rotateCCW90(int mat[4][4], int matr[4][4])
+void rotateCCW90(int mat[4][4])
 {
+int matr[4][4];
 int i, j;
 for(i=0; i<4; i++)
    {
@@ -26,9 +27,16 @@ for(i=0; i<4; i++)
         matr[i][j]=mat[j][3-i];
      }
    }
+for(i=0; i<4; i++)
+   {
+    for(j=0; j<4; j++)
+        mat[i][j]=matr[i][j];
+   }
+
 }
-void flipV(int mat[4][4], int matr[4][4])
+void flipV(int mat[4][4])
 {
+int matr[4][4];
 int i, j;
 for(i=0; i<4; i++)
    {
@@ -37,9 +45,16 @@ for(i=0; i<4; i++)
          matr[i][j]=mat[3-i][j];
      }
    }
+for(i=0; i<4; i++)
+   {
+    for(j=0; j<4; j++)
+        mat[i][j]=matr[i][j];
+   }
+
 }
-void transposSide(int mat[4][4], int matr[4][4])
+void transposSide(int mat[4][4])
 {
+int matr[4][4];
 int i, j;
 for(i=0; i<4; i++)
    {
@@ -47,5 +62,10 @@ for(i=0; i<4; i++)
      {
         matr[i][j]=mat[3-j][3-i];
      }
+   }
+for(i=0; i<4; i++)
+   {
+    for(j=0; j<4; j++)
+        mat[i][j]=matr[i][j];
    }
 }

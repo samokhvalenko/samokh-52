@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+void copytoMat(int mat[4][4]);
 
 void fillRand(int mat[4][4])
 {

@@ -2,25 +2,19 @@
 #include <stdio.h>
 #include <math.h>
 
-int main()
+double calc(int n, int m)
 {
     int i,j;
-    int n=1;
-    int m=2;
-    double x, y, z;
+    double x, y;
     x=0;
     y=0;
-    z=0;
     for (j=1; j<=m; j++)
-    {
-        y = cos( ( j * 3,14 ) / 2 ) + y;
-
-    }
+        {
+            y = cos( ( j * 3,14 ) / 2 ) + y;
+        }
     for (i=1; i<=n; i++)
         {
-            x = z + (1+i)*y;
-            z=x;
+            x = x + (1+i)*y;
         }
-    printf("%lf", y);
-    return 0;
+    return x;
 }

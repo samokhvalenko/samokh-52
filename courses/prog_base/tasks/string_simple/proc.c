@@ -2,7 +2,6 @@
 #include <string.h>
 #include <math.h>
 
-
 char * process(char * resultStr, const char * text[], int linesNum, const char * extraStr)
 {
 	const char * textLines;

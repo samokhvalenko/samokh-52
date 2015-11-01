@@ -2,6 +2,21 @@
 #include <string.h>
 #include <math.h>
 
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+char * process(char * resultStr, const char * textLines[], int linesNum, const char * extraStr);
+int main(void)
+{
+	int j = 0;
+	char res[100];
+	const char * text[30] = {"This is Sparta", "Note this page", "not this"};
+	const char extra[30] = "I am idiot";
+	char * res1 =  process(res, text, 3, extra);
+	for (j = 0; res[j] != '\0'; j++)
+		printf("%c", res[j]);
+	return 0;
+}
 char * process(char * resultStr, const char * text[], int linesNum, const char * extraStr)
 {
 	const char * textLines;
@@ -51,7 +66,8 @@ char * process(char * resultStr, const char * text[], int linesNum, const char *
 	}
 	if (err == 1)
 	{
-		resultStr = "NULL";
+	    resultStr[0] = '\0';
+		strcat(resultStr, "NULL");
 	}
 		return resultStr;
 }

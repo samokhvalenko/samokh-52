@@ -1,17 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-char * process(char * resultStr, const char * textLines[], int linesNum, const char * extraStr);
-int main(void)
-{
-	int j = 0;
-	char res[100];
-	const char * text[30] = {"This is Sparta", "Note this page", "not this"};
-	const char extra[30] = "I'm idiot";
-	char * res1 =  process(res, text, 3, extra);
-	puts(res1);
-	return 0;
-}
+
 char * process(char * resultStr, const char * text[], int linesNum, const char * extraStr)
 {
 	const char * textLines;

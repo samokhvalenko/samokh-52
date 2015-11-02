@@ -15,16 +15,23 @@ char * process(char * resultStr, const char * text[], int linesNum, const char *
 		textLines = text[i];
 		for(j = 0;textLines[j] != '\0';j++)
 		{
-			if(textLines[j] == ' ')
+			if(textLines[j] == ' ' && err == 0)
 			{
-				err = (wordLen > 4)?1:0;
+				err = (wordLen > 5)?1:0;
 				wordNumber++;
 				wordLen = 0;
+				flag = 0;
 			}
 			else
 				wordLen++;
+				flag = 1;
 		}
-		if  (wordNumber > 5 && err == 0)
+		if(textLines[j] == '\0' && flag == 1 )
+        {
+            wordNumber++;
+            wordLen=0;
+        }
+		if  (wordNumber >= 5 && err == 0)
 		{
 			j = 0;
 			while (j <= (log10((double) wordNumber) - 1))
@@ -46,10 +53,12 @@ char * process(char * resultStr, const char * text[], int linesNum, const char *
 				resultStr[c++] = extraStr[j];
 			}
 			resultStr[c] = '\0';
+			wordNumber = 5;
+			break;
 
 		}
 	}
-	if (err == 1)
+	if (err == 1 || wordNumber < 5 )
 	{
 	    resultStr[0] = '\0';
 		strcat(resultStr, "NULL");

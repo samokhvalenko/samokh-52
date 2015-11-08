@@ -14,7 +14,7 @@ int main()
 	int i,j,g;
     pos.X = 0;
     pos.Y = 24;
-	const long SLEEP_MILLISECONDS = 1;
+	const long SLEEP_MILLISECONDS = 5;
 	for (i = 0; i < 25; i++)
 		for (j = 0; j < 81; j++)
 		{

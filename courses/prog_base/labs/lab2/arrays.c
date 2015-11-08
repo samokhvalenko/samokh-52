@@ -3,10 +3,6 @@
 #include <math.h>
 #include <time.h>
 
-float meanValue(int arr[], int size);
-void fillRand1(int arr[], int size);
-int maxValue(int arr[], int size);
-
 int main()
 {
     int max;
@@ -56,11 +52,9 @@ float meanValue(int arr[], int size)
 int maxValue(int arr[], int size)
 {
     int i, max=arr[0];
-    for(i=1; i<size; i++)
+    for(i=0; i<size; i++)
     {
-        if ( max>arr[i])
-            max=max;
-        else
+        if (arr[i] > max)
             max=arr[i];
     }
     return max;
@@ -82,29 +76,69 @@ int meanIndex(int arr[], int size)
 }
 int maxIndex(int arr[], int size)
 {
-
+    int i;
+    int max = maxValue(arr, size);
+    for (i = 0; i < size; i++)
+		if (arr[i] == max)
+			return i;
 }
 int maxOccurance(int arr[], int size)
 {
+	int i ,j;
+	int q = 1, p = 1;
+	int max = arr[0];
+	for (i = 0; i < size; i++){
+		for (j = i + 1; j < size; j++)
+			if (arr[j] == arr[i])
+				p++;
+		if (p >= q)
+		{
+			q = p;
+			max = arr[i];
+		}
+		if(p == q && arr[i] > max)
+			max = arr[i];
 
+		p = 1;
+	}
+	return max;
 }
 int diff(int arr1[], int arr2[], int res[], int size)
 {
-    int i,j,z,result;
+    int i,result;
     for(i=0;i<size;i++)
-        for(j=0;j<size;j++)
-            for(z=0;z<size;z++)
-            {
-                res[z]=arr1[i]-arr2[j];
-                if(res[z]=0)
-                    result++;
-                else
-                    return 0;
+        {
+            res[i]=arr1[i]-arr2[i];
+            if(res[i]=0)
+                result++;
+            else
+                return 0;
             }
     if(result=size)
         return 1;
 }
-
+void _div(int arr1[], int arr2[], int res[], int size)
+{
+    int i,j,z;
+    for(i=0;i<size;i++)
+        {
+            res[i]=arr1[i]/arr2[i];
+        }
+}
+int lteq(int arr1[], int arr2[], int size)
+{
+    int i;
+	for (i = 0; i < size; i++)
+		if (arr1[i] > arr2[i])
+			return 0;
+	return 1;
+}
+void lor(int arr1[], int arr2[], int res[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		res[i] = arr1[i] || arr2[i];
+}
 
 
 

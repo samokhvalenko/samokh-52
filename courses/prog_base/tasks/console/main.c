@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-
 #include <windows.h>
 
 int main()
@@ -32,11 +31,11 @@ int main()
 			SetConsoleCursorPosition(hConsole, pos);
 
 			    switch (( pos.Y + 80 - pos.X ) % 3)
-                {
-                    case 0: SetConsoleTextAttribute(hConsole, shmal); break;
-                    case 1: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
-                    case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
-                }
+                    {
+                        case 0: SetConsoleTextAttribute(hConsole, shmal); break;
+                        case 1: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
+                        case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
+                    }
 			printf("*");
 		}
 		pos.X++;
@@ -45,11 +44,11 @@ int main()
 			Sleep(SLEEP_MILLISECONDS);
 			SetConsoleCursorPosition(hConsole, pos);
 			    switch (( pos.Y + 80 - pos.X ) % 3)
-                {
-                    case 0: SetConsoleTextAttribute(hConsole, shmal); break;
-                    case 1: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
-                    case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
-                }
+                    {
+                        case 0: SetConsoleTextAttribute(hConsole, shmal); break;
+                        case 1: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
+                        case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
+                    }
 			printf("*");
 		}
 	}
@@ -62,17 +61,17 @@ int main()
 			switch ( (pos.X - pos.Y) )
 			{
 			    case 26:
-			    SetConsoleTextAttribute(hConsole, not_a_nigger);
-			    printf("*");
-			    break;
+                    SetConsoleTextAttribute(hConsole, not_a_nigger);
+                    printf("*");
+                    break;
                 default:
                     if ((pos.X - pos.Y) > 26)
                     switch (( pos.Y + 80 - pos.X ) % 3)
-                    {
-                    case 0: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
-                    case 1: SetConsoleTextAttribute(hConsole, shmal); break;
-                    case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
-                    }
+                        {
+                            case 0: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
+                            case 1: SetConsoleTextAttribute(hConsole, shmal); break;
+                            case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
+                        }
                     else
                       switch (( pos.Y + 80 - pos.X ) % 3)
                         {
@@ -80,7 +79,7 @@ int main()
                             case 1: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
                             case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
                         }
-			printf("*");
+                printf("*");
             }
 		}
 		pos.X++;
@@ -91,17 +90,17 @@ int main()
 			switch ( (pos.X - pos.Y) )
 			{
 			    case 26:
-			    SetConsoleTextAttribute(hConsole, not_a_nigger);
-			    printf("*");
-			    break;
+                    SetConsoleTextAttribute(hConsole, not_a_nigger);
+                    printf("*");
+                    break;
                 default:
                     if ((pos.X - pos.Y) > 26)
-                    switch (( pos.Y + 80 - pos.X ) % 3)
-                    {
-                    case 0: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
-                    case 1: SetConsoleTextAttribute(hConsole, shmal); break;
-                    case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
-                    }
+                        switch (( pos.Y + 80 - pos.X ) % 3)
+                        {
+                            case 0: SetConsoleTextAttribute(hConsole, not_a_nigger); break;
+                            case 1: SetConsoleTextAttribute(hConsole, shmal); break;
+                            case 2: SetConsoleTextAttribute(hConsole, dont_eat_that_snow); break;
+                        }
                     else
                       switch (( pos.Y + 80 - pos.X ) % 3)
                         {
@@ -113,6 +112,5 @@ int main()
             }
 		}
     }
-
 	return 0;
 }

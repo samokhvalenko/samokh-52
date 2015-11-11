@@ -2,7 +2,7 @@
 int run(int moves[], int movesLen, int res[], int resLen);
 int main()
 {
-	int arr[6] = {203, 103, 203, 203, 23, 5};
+	int arr[6] = {5, 203, 5, 5, 203};
 	int brr[6] = {-10, -10, -10, -10, -10, -10};
 	int a = 6, b = 6;
 	int c = run(arr, a, brr, b);
@@ -39,13 +39,13 @@ int run(int moves[], int movesLen, int res[], int resLen)
 				case 203: g = 3; break;
 				default: g = 4; currentState = STOP_STATE; break;
         };
-		if (f != 4 && arr[current_pos + 4][f] > 0)
+		if (g != 4 && arr[current_pos + 4][g] > 0)
 		{
-			res[j] = arr[current_pos + 4][f];
+			res[j] = arr[current_pos + 4][g];
 			j++;
 		}
 		else
-			currentState = arr[current_pos + 4][f];
+			currentState = arr[current_pos + 4][g];
 		if (currentState == STOP_STATE)
 		{
 			i = movesLen;
@@ -59,6 +59,8 @@ int run(int moves[], int movesLen, int res[], int resLen)
 			j--;
 			res[j] = 0;
 		}
+		else if(currentState == POP_STATE && j == 0)
+            res[j] = 0;
 		if (currentState == REPEAT_STATE)
 			i--;
 		if (currentState == BREAK_STATE)
@@ -71,7 +73,7 @@ int run(int moves[], int movesLen, int res[], int resLen)
 		}
 		if (j == resLen)
 			i = movesLen;
-		current_pos = brr[current_pos + 4][f];
+		current_pos = brr[current_pos + 4][g];
 	}
 	int c = j;
 	while (j++ < resLen)

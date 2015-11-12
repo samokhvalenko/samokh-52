@@ -8,13 +8,13 @@ int main()
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD pos;
+    const long SLEEP_MILLISECONDS = 5;
 	int dont_eat_that_snow = BACKGROUND_RED | BACKGROUND_GREEN; /* Yellow */
     int not_a_nigger = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE; /* White */
     int shmal = BACKGROUND_GREEN; /*Green*/
 	int i,j,g;
     pos.X = 0;
     pos.Y = 24;
-	const long SLEEP_MILLISECONDS = 5;
 	for (i = 0; i < 25; i++)
 		for (j = 0; j < 81; j++)
 		{

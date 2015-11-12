@@ -6,10 +6,10 @@
 int main()
 {
     int max;
-    int size = 9;
+    int size = 15;
     int arr[size];
     fillRand1(arr, size);
-    max=checkRand1(arr, size);
+    max = meanIndex(arr,size);
     printf("%i", max);
     return 0;
 }
@@ -22,6 +22,7 @@ void fillRand1(int arr[], int size)
     for(i=0; i<size; i++)
     {
         arr[i] = 1 + rand() % 99;
+        printf("%i\n", arr[i]);
     }
 }
 int checkRand1(int arr[], int size)
@@ -61,7 +62,7 @@ int maxValue(int arr[], int size)
 }
 int meanIndex(int arr[], int size)
 {
-    int i;
+    int i,c;
     float mean, meanval;
     mean=meanValue(arr, size);
     meanval=mean-arr[0];
@@ -69,10 +70,11 @@ int meanIndex(int arr[], int size)
     {
         if(meanval<mean-arr[i])
             meanval=meanval;
-        else
+        else if(meanval>mean-arr[i])
             meanval=mean-arr[i];
+            c = i;
     }
-    return ;
+    return c;
 }
 int maxIndex(int arr[], int size)
 {

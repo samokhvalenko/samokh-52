@@ -8,7 +8,7 @@
 #include <ctype.h>
 
 void workZonePrintHello();
-int scanningCommand( int com, int size, float arr[size]);
+int scanningCommand( int com, int size, float arr[size], char **p);
 void PrintVertical(int horPos, int verPos, int verPos2);
 void PrintHorizontal(int horPos, int verPos, int horPos2);
 void ClearThisPlease( int horPos, int verPos, int horPos2, int verPos2);
@@ -16,6 +16,7 @@ void color(int tcolor);
 void cursPos( int X, int Y);
 int choseCom( int com, int size, float arr[size]);
 void Help();
+void scanningSize();
 void NullAll(int size, float arr[size]);
 void ElChange(int size, float arr[size]);
 void FillRand(int size, float arr[size]);
@@ -27,61 +28,68 @@ void MaxToMinPlace(int size, float arr[size]);
 int main()
 {
     fflush(stdin);
+    ClearThisPlease( 0, 0, 25, 80);
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos;
-    int com, size;
     workZonePrintHello();
+    color(1);
+    cursPos( 0, 0);
+    printf("Welcome, master! Remember to use only numbers and english letters without CAPS");
+    cursPos( 0, 2);
+    printf("Here is a work\nzone for you");
+    cursPos( 23, 2);
+    printf("Here will be an information about your massive");
+    cursPos( 23, 3);
+    printf("and information about changes in it");
+    color(3);
+    PrintHorizontal( 0, 1, 80);
+    PrintHorizontal( 0, 4, 80);
+	scanningSize();
+    cursPos( 25, 23);
+    return 0;
+}
+
+void scanningSize()
+{
+    fflush(stdin);
+    //workZonePrintHello();
+    int size, status = 0, com;
     cursPos(0, 5);
     color(1);
-    printf("enter array's size,\nless then 9 \n");
-	int status = 0;
-	status = scanf("%i", &size);
+    printf("Enter the\narray's size");
+    status = scanf("%u", &size);
 	if ( size >= 0 && size < 9)
 	{
 	    float arr[size];
         NullAll(size, arr);
         choseCom(com, size, arr);
 	}
-	else if(!status)
-        main();
-	else
-    {
-        cursPos(0, 24);
-		main();
-    }
-    cursPos( 25, 23);
-    return 0;
+	else if(!status){
+        workZonePrintHello();
+        scanningSize(size);
+	}
+	else{
+        workZonePrintHello();
+		scanningSize(size);
+	}
 }
-
-void NullAll( int size, float arr[size])
-{
-    int i;
-    ClearThisPlease(5, 30,6,79);
-    ClearThisPlease( 5, 24, 10, 79);
-    cursPos( 25, 6);
-    for(i = 0; i < size; i++)
-        {
-            arr[i] = 0;
-            printf(" %.2f ", arr[i]);
-        }
-}
-
-char *name[][40] = {
-  "help\n","nullall\n","elchange\n","fillrand\n","backprint\n","printsum\n","positval\n","commove\n","cyclmove\n","powering\n","firstmax\n","maxtominplace\n", "", ""  };
-
-  char *str[][40] = {
-  "prints list of commands", "changes all elements to 0","changes element on ind X to value Y","Fills mass by random numbers","prints mass to reverse","prints sum of all elements",
-  "prints positive elements value","moves left on X positions, new vals == 0 ","moves mass left, new vals != 0","Raises mass to the power X","prints first max element","replaces max and min elements", "", ""  };
 
 int choseCom( int com, int size, float arr[size])
 {
+    char *name[40] = {
+    "help\n","nullall\n","elchange\n","fillrand\n","backprint\n","printsum\n","positval\n","commove\n","cyclmove\n","powering\n","firstmax\n","maxtominplace\n", "", ""  };
+
+    char *str[40] = {
+    "prints list of commands", "changes all elements to 0","changes element on ind X to value Y","Fills mass by random numbers","prints mass to reverse","prints sum of all elements",
+    "prints positive elements value","moves left on X positions, new vals == 0 ","moves mass left, new vals != 0","Raises mass to the power X","prints first max element","replaces max and min elements", "", ""  };
+
     int i, X, Y = 12, pv = 0, maxInd, minInd;
     float sum = 0, max, min;
     char **p;
     char **z;
     p = (char **)name;
     z = (char **)str;
-    com = scanningCommand(com, size, arr);
+    com = scanningCommand(com, size, arr, p);
     switch (com)
     {
         case 0:
@@ -197,6 +205,17 @@ void MaxToMinPlace(int size, float arr[size])
         printf("%.2f ", arr[i]);
     }
 }
+void NullAll( int size, float arr[size])
+{
+    int i;
+    ClearThisPlease( 5, 23, 10, 79);
+    cursPos( 25, 6);
+    for(i = 0; i < size; i++)
+        {
+            arr[i] = 0;
+            printf(" %.2f ", arr[i]);
+        }
+}
 
 void ComMoveL(int size, float arr[size])
 {
@@ -245,7 +264,6 @@ void CyclMoveL(int size, float arr[size])
         arr[size-1] = c;
         c = arr[0];
     }
-    //ClearThisPlease( 5, 24, 10, 79);
     for(i = 0; i < size; i++)
     {
         cursPos( 24 + i*6, 7);
@@ -263,7 +281,7 @@ void Powering(int size, float arr[size])
     status = scanf("%i", &power);
 	if(!status || power > 5 || power < -5)
         choseCom(com, size, arr);
-    ClearThisPlease( 5, 24, 10, 79);
+    ClearThisPlease( 5, 23, 10, 79);
     cursPos( 25, 6);
     for(i = 0; i < size; i++)
     {
@@ -279,9 +297,9 @@ void FillRand(int size, float arr[size])
     srand( time(&t));
     cursPos( 0, 5);
     color(1);
-    ClearThisPlease( 5, 24, 10, 79);
+    ClearThisPlease( 5, 23, 10, 79);
     cursPos( 25, 6);
-    ClearThisPlease( 5, 24, 10, 79);
+    ClearThisPlease( 5, 23, 10, 79);
     for(i=0; i<size; i++)
     {
         arr[i] = ((float)rand()/(float)(RAND_MAX) * 50);
@@ -326,29 +344,19 @@ void workZonePrintHello()
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos;
+    ClearThisPlease( 5, 23, 10, 79);
+    ClearThisPlease(5, 0, 11, 20);
     int i,j, verPos, horPos, horPos2, verPos2;
-    ClearThisPlease( 0, 0, 25, 80);
     color(3);
-    PrintHorizontal( 0, 1, 80);
-    PrintHorizontal( 0, 4, 80);
     PrintHorizontal( 0, 11, 80);
     PrintVertical( 20, 2, 11);
     color(1);
-    cursPos( 0, 0);
-    printf("Welcome, master! Please, remember to use only numbers and english letters without CAPS");
-    cursPos( 0, 2);
-    printf("Here is a work\nzone for you");
-    cursPos( 23, 2);
-    printf("Here will be an information about your massive");
-    cursPos( 23, 3);
-    printf("and information about changes in it");
     cursPos( 0, 12);
     printf("0.Help 1.NullAll 2.ElChange 3.FillRand 4.BackPrint 5.PrintSum 6.PositVal \n7.ComMove 8.CyclMove 9.Powering 10.FirstMax. 11.MaxToMinPlace\n12.ReturnLast ");
-    color(0);
 }
 
 
-int scanningCommand( int com , int size, float arr[size])
+int scanningCommand( int com , int size, float arr[size], char **p)
 {
     fflush(stdin);
     char buffer[15];
@@ -357,8 +365,6 @@ int scanningCommand( int com , int size, float arr[size])
     ClearThisPlease(5, 0, 11, 20);
     cursPos( 0, 5);
     color(1);
-    char **p;
-    p = (char **)name;
     puts("Enter command: ");
     fgets(buffer, 15,stdin);
     for(com = 0; com < 13; com++)
@@ -422,27 +428,16 @@ void color(int tcolor)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos;
-    const int FI_FR = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-    const int FI = FOREGROUND_INTENSITY | BACKGROUND_BLUE;
-    const int DefaultColor = 7;
-    const int FY = FOREGROUND_RED |FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-    const int BG =  FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
     switch(tcolor)
     {
         case 1:
-            SetConsoleTextAttribute(hConsole, FI_FR);
-            break;
-        case 2:
-            SetConsoleTextAttribute(hConsole, FI);
-            break;
-        case 0:
-            SetConsoleTextAttribute(hConsole, DefaultColor);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             break;
         case 3:
-            SetConsoleTextAttribute(hConsole, FY);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED |FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             break;
         case 4:
-            SetConsoleTextAttribute(hConsole, BG);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
             break;
     }
 }

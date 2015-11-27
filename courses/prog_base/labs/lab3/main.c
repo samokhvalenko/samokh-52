@@ -12,7 +12,7 @@ int scanningCommand( int com, int size, float arr[size], char **p);
 void PrintVertical(int horPos, int verPos, int verPos2);
 void PrintHorizontal(int horPos, int verPos, int horPos2);
 void ClearThisPlease( int horPos, int verPos, int horPos2, int verPos2);
-void color(int tcolor);
+void setTextColor(int tcolor);
 void cursPos( int X, int Y);
 int choseCom( int com, int size, float arr[size]);
 void Help();
@@ -24,6 +24,7 @@ void ComMoveL(int size, float arr[size]);
 void CyclMoveL(int size, float arr[size]);
 void Powering(int size, float arr[size]);
 void MaxToMinPlace(int size, float arr[size]);
+void printArray( int size, float arr[size]);
 
 int main()
 {
@@ -32,7 +33,7 @@ int main()
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos;
     workZonePrintHello();
-    color(1);
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     cursPos( 0, 0);
     printf("Welcome, master! Remember to use only numbers and english letters without CAPS");
     cursPos( 0, 2);
@@ -41,12 +42,22 @@ int main()
     printf("Here will be an information about your massive");
     cursPos( 23, 3);
     printf("and information about changes in it");
-    color(3);
+    setTextColor(FOREGROUND_RED |FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     PrintHorizontal( 0, 1, 80);
     PrintHorizontal( 0, 4, 80);
 	scanningSize();
     cursPos( 25, 23);
     return 0;
+}
+
+void printArr( int size, float arr[size], int y)
+{
+    int i;
+    for(i = 0; i < size; i++)
+    {
+        cursPos( 24 + i*6, y);
+        printf("%.2f ", arr[i]);
+    }
 }
 
 void scanningSize()
@@ -55,8 +66,8 @@ void scanningSize()
     //workZonePrintHello();
     int size, status = 0, com;
     cursPos(0, 5);
-    color(1);
-    printf("Enter the\narray's size");
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+    printf("Enter the\narray's size\nless then 9\n");
     status = scanf("%u", &size);
 	if ( size >= 0 && size < 9)
 	{
@@ -95,7 +106,7 @@ int choseCom( int com, int size, float arr[size])
         case 0:
             ClearThisPlease(12, 0, 25, 80);
             cursPos( 0, 12);
-            color(1);
+            setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             for(i = 0; i < 12; i++)
             {
                 cursPos( 0, Y);
@@ -109,7 +120,7 @@ int choseCom( int com, int size, float arr[size])
                 puts(*z++);
                 Y++;
             }
-            color(4);
+            setTextColor(FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
             for (Y = 12;Y < 24; Y++)
             {
                 cursPos( 20, Y);
@@ -126,7 +137,7 @@ int choseCom( int com, int size, float arr[size])
             FillRand(size, arr);
             choseCom(com, size, arr);
         case 4:
-            ClearThisPlease( 5, 24, 10, 79);
+            ClearThisPlease( 5, 23, 10, 79);
             cursPos( 25, 6);
             for(i = size - 1; i > -1; i--)
             {
@@ -134,7 +145,7 @@ int choseCom( int com, int size, float arr[size])
             }
             choseCom(com, size, arr);
         case 5:
-            ClearThisPlease( 5, 24, 10, 79);
+            ClearThisPlease( 5, 23, 10, 79);
             cursPos( 25, 6);
             for(i=0; i<size; i++)
             {
@@ -148,7 +159,7 @@ int choseCom( int com, int size, float arr[size])
                 if( arr[i] >=0)
                 pv++;
             }
-            ClearThisPlease( 5, 24, 10, 79);
+            ClearThisPlease( 5, 23, 10, 79);
             cursPos( 25, 6);
             printf("Amount of positive elements is %i ", pv);
             choseCom(com, size, arr);
@@ -170,7 +181,7 @@ int choseCom( int com, int size, float arr[size])
                     max = arr[i];
                     maxInd = i;
                 }
-            ClearThisPlease( 5, 24, 10, 79);
+            ClearThisPlease( 5, 23, 10, 79);
             cursPos( 25, 6);
             printf("Max element is %.2f, index is %i", max, maxInd);
             choseCom(com, size, arr);
@@ -199,22 +210,14 @@ void MaxToMinPlace(int size, float arr[size])
         }
     arr[minInd] = max;
     arr[maxInd] = min;
-    for(i = 0; i < size; i++)
-    {
-        cursPos( 24 + i*6, 7);
-        printf("%.2f ", arr[i]);
-    }
+    printArr(size, arr, 6);
 }
 void NullAll( int size, float arr[size])
 {
     int i;
     ClearThisPlease( 5, 23, 10, 79);
     cursPos( 25, 6);
-    for(i = 0; i < size; i++)
-        {
-            arr[i] = 0;
-            printf(" %.2f ", arr[i]);
-        }
+    printArr(size, arr, 6);
 }
 
 void ComMoveL(int size, float arr[size])
@@ -222,7 +225,7 @@ void ComMoveL(int size, float arr[size])
     int com;
     ClearThisPlease(5, 0, 11, 20);
     cursPos(0, 5);
-    color(1);
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     int m, i;
     printf("Enter the amount\nof moves\nless then size\n");
     scanf("%i", &m);
@@ -234,12 +237,8 @@ void ComMoveL(int size, float arr[size])
         if(i > size - m)
             arr[i] = 0;
     }
-    //ClearThisPlease( 5, 24, 10, 79);
-    for(i = 0; i < size; i++)
-    {
-        cursPos( 24 + i*6, 7);
-        printf("%.2f ", arr[i]);
-    }
+    //ClearThisPlease( 5, 23, 10, 79);
+    printArr(size, arr, 7);
     choseCom(com, size, arr);
 }
 
@@ -248,8 +247,8 @@ void CyclMoveL(int size, float arr[size])
     int com;
     ClearThisPlease(5, 0, 11, 20);
     cursPos(0, 5);
-    color(1);
-    int m, i, z, j = 0;
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+    int m, i, z;
     float c = arr[0];
     printf("Enter the amount\nof moves\nless then size\n");
     scanf("%i", &m);
@@ -258,36 +257,28 @@ void CyclMoveL(int size, float arr[size])
     for(z = 0; z < m; z++)
     {
         for(i = 0; i < size-1;i++)
-        {
             arr[i] = arr[i + 1];
-        }
         arr[size-1] = c;
         c = arr[0];
     }
-    for(i = 0; i < size; i++)
-    {
-        cursPos( 24 + i*6, 7);
-        printf("%.2f ", arr[i]);
-    }
+    printArr(size, arr, 7);
     choseCom(com, size, arr);
 }
 
 void Powering(int size, float arr[size])
 {
     cursPos( 0, 5);
-    color(1);
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     int status = 0, power, i, com;
-    printf("Enter the power,\nless then 5\nbigger then -5");
+    printf("Enter the power,\nless then 5\nbigger then -5\n");
     status = scanf("%i", &power);
 	if(!status || power > 5 || power < -5)
         choseCom(com, size, arr);
     ClearThisPlease( 5, 23, 10, 79);
     cursPos( 25, 6);
     for(i = 0; i < size; i++)
-    {
         arr[i] = pow(arr[i], power);
-        printf("%.2f ", arr[i]);
-    }
+    printArr(size, arr, 6);
 }
 
 void FillRand(int size, float arr[size])
@@ -296,16 +287,13 @@ void FillRand(int size, float arr[size])
     int i, X = 5, Y = 30;
     srand( time(&t));
     cursPos( 0, 5);
-    color(1);
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     ClearThisPlease( 5, 23, 10, 79);
     cursPos( 25, 6);
     ClearThisPlease( 5, 23, 10, 79);
     for(i=0; i<size; i++)
-    {
         arr[i] = ((float)rand()/(float)(RAND_MAX) * 50);
-        cursPos( 24 + i*6, 6);
-        printf("%.2f", arr[i]);
-    }
+    printArr(size, arr, 6);
     cursPos( 0, 5);
 }
 
@@ -315,7 +303,7 @@ void ElChange(int size, float arr[size])
     float z;
     ClearThisPlease(5, 0, 11, 20);
     cursPos( 0, 5);
-    printf("Enter elements\nindex and value,\n (0___99) ");
+    printf("Enter elements\nindex and value,\n (0___99)\n");
     status = scanf("%u", &i);
 	if (!status ||i > size || i < 0)
 	{
@@ -332,11 +320,7 @@ void ElChange(int size, float arr[size])
     }
     arr[i] = z;
     ClearThisPlease( 5, 23, 10, 79);
-    for(i=0; i<size; i++)
-    {
-        cursPos( 24 + i*6, 6);
-        printf("%.2f", arr[i]);
-    }
+    printArr(size, arr, 6);
     cursPos( 23, 7);
 }
 
@@ -346,11 +330,10 @@ void workZonePrintHello()
     COORD pos;
     ClearThisPlease( 5, 23, 10, 79);
     ClearThisPlease(5, 0, 11, 20);
-    int i,j, verPos, horPos, horPos2, verPos2;
-    color(3);
+    setTextColor(FOREGROUND_RED |FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     PrintHorizontal( 0, 11, 80);
     PrintVertical( 20, 2, 11);
-    color(1);
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     cursPos( 0, 12);
     printf("0.Help 1.NullAll 2.ElChange 3.FillRand 4.BackPrint 5.PrintSum 6.PositVal \n7.ComMove 8.CyclMove 9.Powering 10.FirstMax. 11.MaxToMinPlace\n12.ReturnLast ");
 }
@@ -363,8 +346,9 @@ int scanningCommand( int com , int size, float arr[size], char **p)
     int i;
     com = 0;
     ClearThisPlease(5, 0, 11, 20);
+    ClearThisPlease( 5, 23, 10, 79);
     cursPos( 0, 5);
-    color(1);
+    setTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     puts("Enter command: ");
     fgets(buffer, 15,stdin);
     for(com = 0; com < 13; com++)
@@ -377,7 +361,7 @@ int scanningCommand( int com , int size, float arr[size], char **p)
     ClearThisPlease(5, 0, 11, 20);
     cursPos( 0, 5);
     printf("Wrong command");
-    color(3);
+    setTextColor(FOREGROUND_RED |FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     PrintHorizontal( 0, 1, 80);
     PrintHorizontal( 0, 4, 80);
     PrintHorizontal( 0, 11, 80);
@@ -424,22 +408,11 @@ void ClearThisPlease( int horPos, int verPos, int horPos2, int verPos2)
 		}
 }
 
-void color(int tcolor)
+void setTextColor(int tcolor)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos;
-    switch(tcolor)
-    {
-        case 1:
-            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-            break;
-        case 3:
-            SetConsoleTextAttribute(hConsole, FOREGROUND_RED |FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-            break;
-        case 4:
-            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-            break;
-    }
+    SetConsoleTextAttribute(hConsole, tcolor);
 }
 
 void cursPos( int X, int Y)

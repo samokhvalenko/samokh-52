@@ -354,9 +354,6 @@ int scanningCommand( int com , int size, float arr[size])
     char buffer[15];
     int i;
     com = 0;
-    //CONSOLE_SCREEN_BUFFER_INFO SBInfo;
-    //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    //GetConsoleScreenBufferInfo(hConsole, &SBInfo);
     ClearThisPlease(5, 0, 11, 20);
     cursPos( 0, 5);
     color(1);

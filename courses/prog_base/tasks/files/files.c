@@ -10,12 +10,14 @@ void fprocess(const char * pread, const char * pwrite)
 		    printf ("Error: NULL");
 		    return ;
 		}
-	int a = 0, b = 0, i;
-	for(i = 0; i < 13; i++)
+	int a = 0, b = 0, i, c, d;
+	for(i = 0; i < 12; i++)
 		while (fgetc(file_r) != 10)
 			;
 	fscanf(file_r, "%i %i", &a, &b);
-	fprintf(file_w, "%i %i", a / b, a % b);
+	c = a / b;
+	d = a % b;
+	fprintf(file_w, "%i %i", c, d);
 	fclose (file_w);
 	fclose (file_r);
 

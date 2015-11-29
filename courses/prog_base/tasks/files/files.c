@@ -5,14 +5,14 @@ void fprocess(const char * pread, const char * pwrite)
 	file_r = fopen(pread, "r");
 	file_w = fopen(pwrite, "w");
 	char ch;
-	if ( NULL == fr|| NULL == fw)
+	if ( NULL == file_r|| NULL == file_w)
 		{
 		    printf ("Error: NULL");
 		    return ;
 		}
 	int a = 0, b = 0, i;
 	for(i = 0; i < 13; i++)
-		while (fgetc(fr) != 10)
+		while (fgetc(file_r) != 10)
 			;
 	fscanf(file_r, "%i %i", &a, &b);
 	fprintf(file_w, "%i %i", a / b, a % b);

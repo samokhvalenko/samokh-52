@@ -12,7 +12,7 @@ int recursiveDich(char * pStart, int sum, int status,int len, int first, int las
     else if( *pStart == ' ')
     {
         pStart++;
-        recursiveDich(pStart,sum, status, len, first, last);
+        return recursiveDich(pStart,sum, status, len, first, last);
     }
     else
     {
@@ -23,7 +23,7 @@ int recursiveDich(char * pStart, int sum, int status,int len, int first, int las
         printf(" %i ", (int)*pStart);
         pStart++;
         status++;
-        recursiveDich(pStart,sum, status, len, first, last);
+        return recursiveDich(pStart,sum, status, len, first, last);
     }
 }
 

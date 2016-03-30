@@ -5,6 +5,7 @@ using namespace sf;
 void menu(RenderWindow &window){
 
     Texture menuTexture1, menuTexture2, menuTexture3, menuTexture1_2, menuTexture2_2, menuTexture3_2, menuBackground;
+
     menuTexture1.loadFromFile("new_game.png");
 	menuTexture2.loadFromFile("load_game.png");
 	menuTexture3.loadFromFile("exit.png");
@@ -12,10 +13,13 @@ void menu(RenderWindow &window){
 	menuTexture1_2.loadFromFile("new_game2.png");
 	menuTexture2_2.loadFromFile("load_game2.png");
 	menuTexture3_2.loadFromFile("exit2.png");
-	menuBackground.loadFromFile("menu_background.jpg");
+	//If you want to see normal background, just uncomment the line under this text
+	//menuBackground.loadFromFile("menu_background.jpg");
+    menuBackground.loadFromFile("menu_background_for_Hadyniak.jpg");
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), menuBg(menuBackground);
 	bool isMenu = 1;
 	int menuNum = 0;
+
 	menu1.setPosition(100, 30);
 	menu2.setPosition(100, 90);
 	menu3.setPosition(100, 150);
@@ -44,6 +48,10 @@ void menu(RenderWindow &window){
 		if (IntRect(130, 150, 45, 30).contains(Mouse::getPosition(window))){
             menuNum = 3;
             menu3.setTexture(menuTexture3_2);
+        }
+
+        if(Keyboard::isKeyPressed(Keyboard::Escape)){
+            window.close();
         }
 
 		if (Mouse::isButtonPressed(Mouse::Left))

@@ -9,10 +9,13 @@ using namespace sf;
 int main()
 {
     RenderWindow window(VideoMode(800, 600), "Road Master");
-    while(window.isOpen()){
-    menu(window);
-    window.clear(Color::Black);
-    window.display();
+
+    window.setFramerateLimit(15); // limit of frames, couse sfml do not have it.
+
+    while(window.isOpen()){ // main cycle of our project
+        menu(window);
+        window.clear(Color::Black);
+        window.display();
     }
     return 0;
 }

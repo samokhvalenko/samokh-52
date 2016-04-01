@@ -1,24 +1,24 @@
 #include <SFML/Graphics.hpp>
-
+#include "roads.h"
 using namespace sf;
 
 void menu(RenderWindow &window){
 
     Texture menuTexture1, menuTexture2, menuTexture3, menuTexture1_2, menuTexture2_2, menuTexture3_2, menuBackground;
 
-    menuTexture1.loadFromFile("new_game.png");
+    menuTexture1.loadFromFile("new_game.png");// see names of files
 	menuTexture2.loadFromFile("load_game.png");
 	menuTexture3.loadFromFile("exit.png");
 
-	menuTexture1_2.loadFromFile("new_game2.png");
+	menuTexture1_2.loadFromFile("new_game2.png");// with bigger letters
 	menuTexture2_2.loadFromFile("load_game2.png");
 	menuTexture3_2.loadFromFile("exit2.png");
-	//If you want to see normal background, just uncomment the line under this text
-	//menuBackground.loadFromFile("menu_background.jpg");
-    menuBackground.loadFromFile("menu_background_for_Hadyniak.jpg");
+
+	menuBackground.loadFromFile("menu_background.jpg");
+
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), menuBg(menuBackground);
-	bool isMenu = 1;
-	int menuNum = 0;
+	int isMenu = 1;
+	int menuNum = 0; // to see were the mouse is now
 
 	menu1.setPosition(100, 30);
 	menu2.setPosition(100, 90);
@@ -50,25 +50,21 @@ void menu(RenderWindow &window){
             menu3.setTexture(menuTexture3_2);
         }
 
-        if(Keyboard::isKeyPressed(Keyboard::Escape)){
-            window.close();
-        }
-
 		if (Mouse::isButtonPressed(Mouse::Left))
 		{
-			if (menuNum == 1)
-                window.close();
-                isMenu = false;
+			if (menuNum == 1){
+                game_start(window); // start the game
+			}
 			if (menuNum == 2) {
-                window.close();
-                isMenu = false;
+                window.close(); // in progress
             }
 			if (menuNum == 3)  {
 			     window.close();
-			     isMenu = false;
             }
 
 		}
+
+        window.clear(Color::White);
 
 		window.draw(menuBg);
 		window.draw(menu1);

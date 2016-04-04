@@ -8,7 +8,7 @@ using namespace sf;
 
 int main()
 {
-    RenderWindow window(VideoMode(900, 600), "Road Master");
+    RenderWindow window(VideoMode(1000, 600), "Road Master");
 
     window.setFramerateLimit(15); // limit of frames, couse sfml do not have it.
 

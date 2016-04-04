@@ -19,7 +19,6 @@ void menu(RenderWindow &window){
 
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), menuBg(menuBackground);
 	int isMenu = 1;
-	int menuNum = 0; // to see were the mouse is now
 
 	menu1.setPosition(100, 30); // sets the position of sprite
 	menu2.setPosition(100, 90);
@@ -35,34 +34,23 @@ void menu(RenderWindow &window){
 		menu1.setColor(Color::White);
 		menu2.setColor(Color::White);
 		menu3.setColor(Color::White);
-		menuNum = 0;
 
 		if (IntRect(135, 40, 220, 30).contains(Mouse::getPosition(window))){
-            menuNum = 1; // flag for mouse position
             menu1.setTexture(menuTexture1_2);
+            if (Mouse::isButtonPressed(Mouse::Left)){
+                game_start(window);
+            }
         }
 		if (IntRect(130, 100, 150, 30).contains(Mouse::getPosition(window))){
-            menuNum = 2;
             menu2.setTexture(menuTexture2_2);
+            if (Mouse::isButtonPressed(Mouse::Left))
+                window.close();
         }
 		if (IntRect(130, 150, 45, 30).contains(Mouse::getPosition(window))){
-            menuNum = 3;
             menu3.setTexture(menuTexture3_2);
+            if (Mouse::isButtonPressed(Mouse::Left))
+                window.close();
         }
-
-		if (Mouse::isButtonPressed(Mouse::Left))
-		{
-			if (menuNum == 1){
-                game_start(window); // start the game
-			}
-			if (menuNum == 2) {
-                window.close(); // in progress
-            }
-			if (menuNum == 3)  {
-			     window.close();
-            }
-
-		}
 
 		window.draw(menuBg);// draw our sprites
 		window.draw(menu1);

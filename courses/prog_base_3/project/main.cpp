@@ -8,14 +8,7 @@ using namespace sf;
 
 int main()
 {
-    RenderWindow window(VideoMode(1000, 600), "Road Master");
-
-    window.setFramerateLimit(15); // limit of frames, couse sfml do not have it.
-
-    while(window.isOpen()){ // main cycle of our project
-        menu(window);
-        window.clear(Color::Black);
-        window.display();
-    }
+    RenderWindow window(VideoMode(1366, 768), "Road Master", sf::Style::Fullscreen);
+    menu(window);
     return 0;
 }

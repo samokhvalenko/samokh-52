@@ -3,7 +3,6 @@
 using namespace sf;
 
 void menu(RenderWindow &window){
-    //window.clear(Color::White);
 
     Texture menuTexture1, menuTexture2, menuTexture3, menuTexture1_2, menuTexture2_2, menuTexture3_2, menuBackground;
 
@@ -18,22 +17,18 @@ void menu(RenderWindow &window){
 	menuBackground.loadFromFile("menu_background.jpg");
 
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), menuBg(menuBackground);
-	int isMenu = 1;
 
 	menu1.setPosition(100, 30); // sets the position of sprite
 	menu2.setPosition(100, 90);
 	menu3.setPosition(100, 150);
 	menuBg.setPosition(0, 0);
 
-	while (isMenu)
+	while (window.isOpen())
 	{
+	    window.clear(Color::White);
 	    menu1.setTexture(menuTexture1);
 	    menu2.setTexture(menuTexture2);
 	    menu3.setTexture(menuTexture3);
-
-		menu1.setColor(Color::White);
-		menu2.setColor(Color::White);
-		menu3.setColor(Color::White);
 
 		if (IntRect(135, 40, 220, 30).contains(Mouse::getPosition(window))){
             menu1.setTexture(menuTexture1_2);
@@ -52,7 +47,7 @@ void menu(RenderWindow &window){
                 window.close();
         }
 
-		window.draw(menuBg);// draw our sprites
+		window.draw(menuBg);
 		window.draw(menu1);
 		window.draw(menu2);
 		window.draw(menu3);

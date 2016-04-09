@@ -15,13 +15,17 @@ file_t * file_new( char * word)
     return self;
 }
 
-int add_file(char * word, dictionary_t * dict){
-    file_t * file = file_new(word);
-    char * text = malloc(sizeof(text_revork(word, dict)));
-    strcpy(text, text_revork(word, dict));
-    int cop_num = word_count(text, dict);
-    file_free(file);
+int file_add(char * word, file_t * file){
+    dictionary_t * dict = dictionary_new();
+    char * text = malloc(sizeof(dictionary_text_revork(word, dict)));
+    strcpy(text, dictionary_text_revork(word, dict));
+    int cop_num = dictionary_word_count(text, dict);
+    dictionary_free(dict);
     return cop_num;
+}
+
+char * file_get_word(file_t * file){
+    return file->word;
 }
 
 int file_free(file_t * self)

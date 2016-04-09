@@ -30,7 +30,7 @@ dictionary_t * dictionary_new()
     return self;
 }
 
-char * text_revork( char * new_word, dictionary_t * self){
+char * dictionary_text_revork( char * new_word, dictionary_t * self){
     if(!strcmp(new_word, "")){
         status = D_EMPTY_WORD;
         return (char*)status;
@@ -67,7 +67,7 @@ char * text_revork( char * new_word, dictionary_t * self){
     return new_word;
 }
 
-int word_count( char * buffer, dictionary_t * self){
+int dictionary_word_count( char * buffer, dictionary_t * self){
    char *words_arr[35], *pov[35];
    char *text;
    int amount_of_words = 0, j, k, words_in_coup, pov_count[35], unic_words_count = 0, d, f; // j, k, f just for cycle
@@ -132,4 +132,9 @@ void dictionary_free(dictionary_t * self)
 {
     free(self);
     free(self->couples);
+    struct couple * tmp = self->couples;
+    while( tmp->next != NULL){
+        free(tmp->word);
+        tmp = tmp->next;
+    }
 }

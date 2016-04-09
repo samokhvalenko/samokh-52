@@ -9,7 +9,8 @@
 typedef struct file_s file_t;
 file_t * file_new(char * word);
 int file_free(file_t * self);
-int add_file(char * word, dictionary_t * dict);
+int file_add(char * word, file_t * file);
+char * file_get_word(file_t * file);
 
 
 #endif

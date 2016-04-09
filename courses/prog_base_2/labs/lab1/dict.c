@@ -11,19 +11,30 @@ struct dictionary_s {
     int num_of_couples;
 };
 
+typedef enum d_status {D_OK = 1, D_NULL = 0, D_ERROR_OPERATION = -1, D_EMPTY_WORD = -2,D_EMPTY_DICT = -3} d_status;
+
+static enum d_status status = D_OK;
+
 dictionary_t * dictionary_new()
 {
     dictionary_t * self = NULL;
     self = malloc(sizeof(struct dictionary_s));
-    if (NULL == self)
+    if (NULL == self){
+        status = D_NULL;
         return NULL;
+    }
     self->couples = malloc(sizeof(struct couple));
     self->couples->next = NULL;
     self->num_of_couples = 0;
+    status = D_OK;
     return self;
 }
 
 char * text_revork( char * new_word, dictionary_t * self){
+    if(!strcmp(new_word, "")){
+        status = D_EMPTY_WORD;
+        return (char*)status;
+    }
     int i, j, count = 0;
     int flag = 0;
     j = 0;
@@ -52,12 +63,13 @@ char * text_revork( char * new_word, dictionary_t * self){
         new_word[i] = reworked_word[i];
     }
     new_word[i-1] = '\0';
+    status = D_OK;
     return new_word;
 }
 
-int word_count( char * buffer, dictionary_t * self){ // magic
+int word_count( char * buffer, dictionary_t * self){
    char *words_arr[35], *pov[35];
-   char* text;
+   char *text;
    int amount_of_words = 0, j, k, words_in_coup, pov_count[35], unic_words_count = 0, d, f; // j, k, f just for cycle
 
    text = strtok(buffer," ");
@@ -97,6 +109,11 @@ int word_count( char * buffer, dictionary_t * self){ // magic
       tmp->num_of_words = pov_count[j];
       self->num_of_couples++;
    }
+   if(self->num_of_couples == 0){
+        status = D_EMPTY_DICT;
+        return status;
+   }
+   status = D_OK;
    return self->num_of_couples;
 }
 

@@ -63,6 +63,20 @@ static void new_without_word_text_reworking( void **state){
     dictionary_free(self);
 }
 
+static void new_empty_word(void **state){
+    dictionary_t * self = dictionary_new();
+    char word[2] = {""};
+    assert_int_equal(text_revork(word, self), -2);
+    dictionary_free(self);
+}
+
+static void new_without_word_dict(void **state){
+    dictionary_t * self = dictionary_new();
+    char word[2] = {""};
+    assert_int_equal(word_count(word, self), -3);
+    dictionary_free(self);
+}
+
 int main(void){
 
     const struct CMUnitTest tests[] =
@@ -75,6 +89,8 @@ int main(void){
         cmocka_unit_test(new_one_word_reworking),
         cmocka_unit_test(new_word_more_spaces_reworking),
         cmocka_unit_test(new_more_krakozyabra_file_add),
+        cmocka_unit_test(new_empty_word),
+        cmocka_unit_test(new_without_word_dict),
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

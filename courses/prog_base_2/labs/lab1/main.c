@@ -7,7 +7,7 @@
 #include "dict.h"
 #include "file.h"
 
-static void file_add_3(void **state){
+static void file_add_3_words(void **state){
     char word[30] = {"^7*gh&^vb^$#nm&*vb&8"};
     file_t * file = file_new(word);
     assert_int_equal(file_add(word, file), 3);
@@ -21,7 +21,7 @@ static void file_add_5_couples_of_words(void **state){
     file_free(file);
 }
 
-static void dictionary_word_count_3( void **state){
+static void dictionary_word_count_3_words( void **state){
     char word[10] = {" gh bn jk"};
     dictionary_t * dict = dictionary_new();
     assert_int_equal(dictionary_word_count(word, dict), 3);
@@ -66,14 +66,14 @@ static void dict_text_rework_no_words( void **state){
 static void dict_text_rework_empty_string(void **state){
     char word[2] = {""};
     dictionary_t * dict = dictionary_new();
-    assert_int_equal(dictionary_text_revork(word, dict), -2);
+    assert_int_equal(get_status(dictionary_text_revork(word, dict)), D_EMPTY_WORD);
     dictionary_free(dict);
 }
 
 static void dict_word_count_empty_string(void **state){
     char word[2] = {""};
     dictionary_t * dict = dictionary_new();
-    assert_int_equal(dictionary_word_count(word, dict), -3);
+    assert_int_equal(dictionary_word_count(word, dict), D_EMPTY_DICT);
     dictionary_free(dict);
 }
 
@@ -81,9 +81,9 @@ int main(void){
 
     const struct CMUnitTest tests[] =
     {
-        cmocka_unit_test(dictionary_word_count_3),
+        cmocka_unit_test(dictionary_word_count_3_words),
         cmocka_unit_test(dict_text_rework_3word_string),
-        cmocka_unit_test(file_add_3),
+        cmocka_unit_test(file_add_3_words),
         cmocka_unit_test(dict_text_rework_no_words),
         cmocka_unit_test(dictionary_word_count_3_couples),
         cmocka_unit_test(dict_text_rework_one_word_string),

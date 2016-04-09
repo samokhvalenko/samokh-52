@@ -11,9 +11,21 @@ struct dictionary_s {
     int num_of_couples;
 };
 
-typedef enum d_status {D_OK = 1, D_NULL = 0, D_ERROR_OPERATION = -1, D_EMPTY_WORD = -2,D_EMPTY_DICT = -3} d_status;
 
-static enum d_status status = D_OK;
+d_status status = D_OK;
+
+d_status get_status(int func){
+    switch (func){
+case 1:
+    return D_OK;
+case 0:
+    return D_NULL;
+case -2:
+    return D_EMPTY_WORD;
+case -3:
+    return D_EMPTY_DICT;
+}
+}
 
 dictionary_t * dictionary_new()
 {

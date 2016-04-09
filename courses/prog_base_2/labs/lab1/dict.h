@@ -2,6 +2,7 @@
 #define AUD_H_INCLUDED
 
 
+typedef enum d_status {D_OK = 1, D_NULL = 0, D_ERROR_OPERATION = -1, D_EMPTY_WORD = -2,D_EMPTY_DICT = -3} d_status;
 typedef struct dictionary_s dictionary_t;
 
 dictionary_t * dictionary_new();

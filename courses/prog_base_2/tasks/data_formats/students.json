@@ -1,0 +1,32 @@
+[
+    {
+        "name" : "Taras",
+        "surname" : "Shevchenko",
+        "birthdate" : "1992-03-09",
+        "age" : 25,
+        "experience_age" : 4.5,
+        "work" : {
+            "shop_name" : "McDonalds",
+        }
+    },
+    {
+        "name" : "Stas",
+        "surname" : "Samokhvalenko",
+        "birthdate" : "1998-18-08",
+        "age" : 17,
+        "experience_age" : 4.5,
+        "work" : {
+            "shop_name" : "McDonalds",
+        }
+    },
+    {
+        "name" : "Ruslan",
+        "surname" : "Batkovuch",
+        "birthdate" : "1992-03-09",
+        "age" : 24,
+        "experience_age" : 13.6,
+        "work" : {
+            "shop_name" : "McDonalds",
+        }
+    },
+]

@@ -30,6 +30,14 @@ void menu(RenderWindow &window){
 	    menu2.setTexture(menuTexture2);
 	    menu3.setTexture(menuTexture3);
 
+	    sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+
 		if (IntRect(135, 40, 220, 30).contains(Mouse::getPosition(window))){
             menu1.setTexture(menuTexture1_2);
             if (Mouse::isButtonPressed(Mouse::Left)){

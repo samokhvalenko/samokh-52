@@ -388,7 +388,7 @@
 1459336721 c:\users\user\desktop\kursach\menu.h
 	<SFML/Graphics.hpp>
 
-1463038210 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\main.cpp
+1463993579 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"menu.h"
@@ -396,14 +396,16 @@
 1460018063 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\menu.h
 	<SFML/Graphics.hpp>
 
-1461573638 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\menu.cpp
+1463996043 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\menu.cpp
 	<SFML/Graphics.hpp>
-	"roads.h"
+	"game.h"
 
-1460018063 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.h
+1463997295 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.h
 	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	"textures.h"
 
-1463038020 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.cpp
+1463995826 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<vector>
@@ -412,4 +414,46 @@
 	<sstream>
 	<stdlib.h>
 	"menu.h"
+	"view.h"
+	"textures.h"
+
+1463993505 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\view.h
+	<SFML/Graphics.hpp>
+
+1464082016 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\game.cpp
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<vector>
+	<list>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	"menu.h"
+	"view.h"
+	"textures.h"
+	"roads.h"
+
+1464081708 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\game.h
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+
+1463995681 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.cpp
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<vector>
+	<list>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	"menu.h"
+	"view.h"
+
+1464082026 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\textures.h
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+
+1463996847 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\d_d.h
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	"roads.h"
 

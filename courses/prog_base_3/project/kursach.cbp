@@ -48,11 +48,15 @@
 		<Linker>
 			<Add directory="C:/Program Files/SFML-2.3.2/lib" />
 		</Linker>
+		<Unit filename="city.h" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
-		<Unit filename="roads.cpp" />
 		<Unit filename="roads.h" />
+		<Unit filename="textures.h" />
+		<Unit filename="view.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

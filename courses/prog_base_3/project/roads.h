@@ -10,13 +10,10 @@ class Road{
 public:
     float w, h, dx, dy,x,y, speed;
     int dir;
-    Image road_image;
-    Texture road_texture, crashed_texture;
     Sprite road_sprite;
     float state;
 
     Road(float X, float Y, Sprites *spr){
-        //road_texture.loadFromFile("roads.png");
         road_sprite.setTexture(spr->Sprites::road_texture);
         road_sprite.setTextureRect(IntRect(585, 130, 37, 37));
         road_sprite.setPosition(X, Y);
@@ -40,11 +37,9 @@ public:
     int roads_count;
     std::vector< Road *> roads;
     Texture road_texture;
-    bool isRoad;
 
     Roads(){
         road_texture.loadFromFile("roads.png");
-        isRoad = true;
     }
 };
 

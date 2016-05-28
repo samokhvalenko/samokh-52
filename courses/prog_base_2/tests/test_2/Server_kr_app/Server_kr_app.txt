@@ -1,0 +1,1 @@
+./Debug/db_manager.c.o ./Debug/json.c.o ./Debug/list.c.o ./Debug/main.c.o ./Debug/socket_win.c.o ./Debug/sqlite3.c.o ./Debug/struct_to_json.c.o ./Debug/xml.c.o ./Debug/files.c.o   

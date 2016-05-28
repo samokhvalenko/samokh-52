@@ -3,14 +3,21 @@
 #include <string.h>
 #include "socket.h"
 #include "http.h"
+#include "db_manager.h"
 #include "json.h"
 #include <stddef.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <windows.h>
 
 int http_getPath(const char * const request, char * pathBuf, int maxPathBuf);
 void server_homepage(socket_t * client);
 void server_notFound(socket_t * client);
 http_request_t http_request_parse(const char * const request);
 void server_students(socket_t * client, http_request_t * req);
+void server_file_parse(socket_t * client);
+void parse_text(char *text);
 char * info_to_xml(char * name, char * group, char * var);
 int main() {
     lib_init();
@@ -41,6 +48,9 @@ int main() {
         else if (strcmp(request.uri, "/info") == 0) {
             server_info(client);
         }
+        else if (strcmp(request.uri, "/filename") == 0) {
+            server_file_parse(client);
+        }
         else {
             server_notFound(client);
         }
@@ -67,7 +77,7 @@ int http_getPath(const char * const request, char * pathBuf, int maxPathBuf) {
 }
 
 void server_homepage(socket_t * client) {
-    const char pageText[1024] = "<!DOCTYPE html> <html> <head> <title>Page Title</title> </head> <body> <h1>My First Heading</h1> <p> <a href=\"http://127.0.0.1:5000/students\">Show persons</a></p> </body> </html>";
+    const char pageText[1024] = "<!DOCTYPE html> <html> <head> <title>Page Title</title> </head> <body> <h1>My First Heading</h1> <p> <a href=\"http://127.0.0.1:5000/database\">Show persons</a></p> </body> </html>";
     char homeBuf[1024];
     sprintf(homeBuf,
         "HTTP/1.1 200 OK\n"
@@ -112,17 +122,26 @@ void server_students(socket_t * client, http_request_t * req) {
     if (strcmp(req->method, "GET") == 0) {
 		char allStudentsJson[10240] = "";
 		char buf[1000];
+        list_t persons = list_new();
 		FILE * file = fopen("Untitled1.xml", "r");
 		while(fgets(buf, 1000, file) != NULL)
 		{
 			strcat(allStudentsJson, buf);
 			puts(buf);
 		}
-		//puts(allStudentsJson);
-		list_t list = xml_to_list(allStudentsJson);
+        db_t * db = db_new("worker.db");
+        
+        
+        for(int i = 1; i < 6; i++){
+            struct person * pers = malloc(sizeof(struct person));
+            pers = db_getWorkerById(db, i);
+            list_add(persons, pers, list_size(persons));
+        }
+        
         char xml_buf[10000];
-        strcpy(xml_buf, list_to_xml_string(list));
-		list_to_xml(list);
+        strcpy(xml_buf, list_to_xml_string(persons));
+		//list_to_xml(persons);
+        puts(xml_buf);
         sprintf(strbuf,
             "HTTP/1.1 200 OK\n"
             "Content-Type: text/xml\n"
@@ -150,4 +169,61 @@ void server_info(socket_t * client)
     socket_write_string(client, homeBuf);
     socket_close(client);
 	free(text);
+}
+
+void server_file_parse(socket_t * client){
+        char html_doc[15000];
+    char * filename = {"C:\\Users\\User\\Desktop\\samokh-52\\courses\\prog_base_2\\tests\\test_2\\Server_kr_app\\files\\filename.txt"};
+    if(file_exists(filename)){
+    char text[10000];
+    char buf[1000];
+    char ContentToReceive[10000];
+    memset(ContentToReceive, '\0', 10000);
+    FILE *f = fopen(filename, "r");
+    char *word;
+    int i = 0, j = 0;
+    char html_text[15000] ="<!DOCTYPE html> <html> <head>List</head> <body><ol type=\"1\">";
+    while(fgets(buf, 1000, f) != NULL)
+		{
+			strcat(ContentToReceive, buf);
+		}
+    word = strtok(ContentToReceive, " ");
+    while(word != NULL){
+        /*j = 0;
+        while(ContentToReceive[i] != ' '){
+            word[j] = ContentToReceive[i];
+            j++;
+            i++;
+        }*/
+        
+        strcat(html_text, "<li>");
+        strcat(html_text, word);
+        strcat(html_text, "</li>");
+        puts(word);
+        word = strtok(NULL, " ");
+    }
+    puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    strcat(html_text, "</ol>");
+    strcat(html_text, "</body> </html>");
+    sprintf(html_doc,
+        "HTTP/1.1 200 OK\n"
+        "Content-Type: text/html\n"
+        "Content-Length: %u\n"
+    "\n%s", strlen(html_text), html_text);
+    
+    }
+    else if(!file_exists(filename)){
+        char html_text[15000] ="<!DOCTYPE html> <html> <head>File does`not exist</head> <body><ol type=\"1\">";
+        
+        strcat(html_text, "</body> </html>");
+        char html_doc[15000];
+        sprintf(html_doc,
+        "HTTP/1.1 200 OK\n"
+        "Content-Type: text/html\n"
+        "Content-Length: %u\n"
+        "\n%s", strlen(html_text), html_text);
+    }
+    socket_write_string(client, html_doc);
+    socket_close(client);
+    
 }

@@ -56,10 +56,28 @@ struct person * db_getWorkerById(db_t * self, int id) {
         printf("can't select workers\n");
         exit(1);
     } else
-        //_fillWorker(stmt, worker);
+        fillWorker(stmt, worker);
     return worker;
 }
 
+void fillWorker(sqlite3_stmt * stmt, struct person *st) {
+    int id = sqlite3_column_int(stmt, 0);
+    const char * name = sqlite3_column_text(stmt, 1);
+    const char * surname = sqlite3_column_text(stmt, 2);
+    const char * birthdate = sqlite3_column_text(stmt, 3);
+    int age = sqlite3_column_int(stmt, 4);
+    float experience_age = sqlite3_column_double(stmt, 5);
+    const char * shop_name = sqlite3_column_text(stmt, 6);
+    if(name == NULL)
+		return ;
+    strcpy(st->name, (const char *)name);
+    strcpy(st->surname, (const char *)surname);
+    strcpy(st->birthdate, (const char *)birthdate);
+    st->age = age;
+    st->experience_age = experience_age;
+    strcpy(st->work.shop_name, (const char *)shop_name);
+
+}
 void db_updateWorker(db_t * self, struct person * workers, int id) {
     sqlite3_stmt * stmt = NULL;
     const char * sqlQuery = "UPDATE Worker_tab SET name = ?, surname = ?, birthdate = ?, age = ?, experience_age = ?, shop_name = ? WHERE Id == ?;";

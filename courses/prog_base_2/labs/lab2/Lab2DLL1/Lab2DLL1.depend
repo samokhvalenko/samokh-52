@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1461181552 source:f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2dll1\main.cpp
+	"main.h"
+	<stdio.h>
+
+1461181545 f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2dll1\main.h
+	<windows.h>
+	"list.h"
+
+1461180326 f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2dll1\list.h
+
+1461222581 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab2\lab2dll1\main.cpp
+	"main.h"
+	<stdio.h>
+
+1461181545 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab2\lab2dll1\main.h
+	<windows.h>
+	"list.h"
+
+1461180326 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab2\lab2dll1\list.h
+

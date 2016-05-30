@@ -1,0 +1,9 @@
+#ifndef LIST_H_INCLUDED
+#define LIST_H_INCLUDED
+
+typedef struct list_s * list_t;
+list_t list_new( int size);
+
+void list_fill();
+
+#endif // LIST_H_INCLUDED

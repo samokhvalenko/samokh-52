@@ -1,0 +1,86 @@
+# depslib dependency file v1.0
+1463673556 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\automata.c
+	<stdio.h>
+	<stdlib.h>
+	"event.h"
+	"list.h"
+	"automata.h"
+
+1463673173 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\event.h
+
+1463673283 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\list.h
+	"event.h"
+
+1463673129 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\automata.h
+	"list.h"
+
+1463673522 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\list.c
+	<stdlib.h>
+	"list.h"
+	"event.h"
+
+1463673554 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<stdarg.h>
+	<stddef.h>
+	<setjmp.h>
+	<cmocka.h>
+	"automata.h"
+	"user.h"
+
+1463673755 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\user.h
+	"event.h"
+	"automata.h"
+
+1463673633 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\callbacks\user.c
+	<stdio.h>
+	<stdlib.h>
+	"event.h"
+	"user.h"
+	"automata.h"
+
+1463772631 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\list.c
+	<stdlib.h>
+	"list.h"
+	"event.h"
+
+1463772641 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\list.h
+	"event.h"
+
+1463673173 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\event.h
+
+1463815723 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	<setjmp.h>
+	<cmocka.h>
+	"automata.h"
+	"user.h"
+
+1463772744 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\automata.h
+	"list.h"
+
+1463775217 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\user.h
+	"event.h"
+	"automata.h"
+
+1463815614 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\user.c
+	<stdio.h>
+	<stdlib.h>
+	"event.h"
+	"user.h"
+	"automata.h"
+
+1463772743 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab3\automata.c
+	<stdio.h>
+	<stdlib.h>
+	"event.h"
+	"list.h"
+	"automata.h"
+

@@ -1,0 +1,4 @@
+EXPORTS
+    DllMain@12 @1
+    list_check @2
+    list_react @3

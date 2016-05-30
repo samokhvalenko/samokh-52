@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1461182463 source:f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2proj\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<time.h>
+	"list.h"
+
+1385320478 f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2proj\main.h
+	<windows.h>
+
+1385320478 f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2proj\main1.h
+	<windows.h>
+
+1385320478 f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2proj\main2.h
+	<windows.h>
+
+1461177680 f:\my documents\github\samokh-52\courses\prog_base_2\tasks\lab2proj\list.h
+
+1461223732 source:c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab2\lab2proj\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<time.h>
+	"list.h"
+
+1461177680 c:\users\user\desktop\samokh-52\courses\prog_base_2\labs\lab2\lab2proj\list.h
+

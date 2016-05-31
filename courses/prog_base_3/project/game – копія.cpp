@@ -10,24 +10,21 @@
 #include "menu.h"
 #include "view.h"
 #include "textures.h"
-#include "city.h"
 #include "roads.h"
 #include "house.h"
-void move_player(Player * player, RenderWindow &window);
 
 enum status {IS_ROAD = 1, IS_HOUSE = 2};
 
 void draw_all(RenderWindow &window, Sprites *spr, Houses * houses, Roads * roads){
     window.clear(Color::White);
     window.draw(spr->back_game_sprite);
-
-    draw_roads(roads, window);
-    draw_houses(houses, window);
     window.draw(spr->rectangle);
     window.draw(spr->rect_road);
     window.draw(spr->road_sprite_gorizontal);
     window.draw(spr->house_sprite);
     window.draw(spr->house_1_w_t);
+    draw_houses(houses, window);
+    draw_roads(roads, window);
 }
 
 void side_panel_move(Sprites *spr, time_t x, time_t y, View &view){
@@ -40,100 +37,99 @@ void side_panel_move(Sprites *spr, time_t x, time_t y, View &view){
 }
 
 bool drag_n_drop(RenderWindow &window, Roads* roads, Houses * houses, Sprites *spr, status status){
-    bool isMove = true;
-    //bool OSPT = false;
+    bool isMove = false;
+    bool OSPT = false;
     float x, y, X = 800, Y = 600;
 
     if(status == IS_ROAD){
         while(1){
-            Sprite road_sprite;
-            Texture road_texture;
 
-            road_texture.loadFromFile("roads.png");
-            road_sprite.setTexture(road_texture);
-            road_sprite.setTextureRect(IntRect(585, 127, 37, 40));
             Vector2i pixelPos = Mouse::getPosition(window);
             Vector2f pos = window.mapPixelToCoords(pixelPos);
-            x = pos.x;
-            y = pos.y;
-            X = div(x, 37).quot * 37;
-            Y = div(y, 40).quot * 40;
+
             Event event;
             while (window.pollEvent(event))
             {
                 if (event.type == Event::Closed)
                     window.close();
             }
-            if (Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, 37) && !is_road(roads, pos) && !is_house(houses, pos)){
-
-                roads->roads.push_back(new Road(SRPX, SRPY, spr));
-                roads->roads_count++;
+            std::cout << "\nIs house: " << is_house(houses, pos);
+            std::cout << "\nIs road: " << is_road(roads, pos);
+            if (Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos) && !is_road(roads, pos) && !is_house(houses, pos)){
+                x = pos.x;
+                y = pos.y;
+                X = div(x, 37).quot * 37;
+                Y = div(y, 37).quot * 37;
                 roads->roads[roads->roads_count-1]->road_sprite.setPosition(Vector2f(X, Y));
+                isMove = false;
+                OSPT = false;
+                return false;
             }
 
-            if (Mouse::isButtonPressed(Mouse::Left)){
+            if (Mouse::isButtonPressed(Mouse::Left) && !isMove){
                 if (spr->road_sprite_gorizontal.getGlobalBounds().contains(pos.x, pos.y))
                 {
+                    if(OSPT == false){
+                        roads->roads.push_back(new Road(SRPX, SRPY, spr));
+                        roads->roads_count++;
+                    }
                     isMove = true;
-                }
-                else{
-                    return false;
+                    OSPT = true;
                 }
             }
 
             if (isMove) {
-                road_sprite.setPosition(X, Y);
+                roads->roads[roads->roads_count-1]->road_sprite.setPosition(pos.x, pos.y);
             }
             window.clear(Color::White);
             draw_all(window, spr, houses, roads);
-            window.draw(road_sprite);
             window.display();
         }
     }
-    while(1){
-            Sprite house_sprite;
-            Texture house_texture;
-
-            house_texture.loadFromFile("house_small.png");
-            house_sprite.setTexture(house_texture);
+    if(status == IS_HOUSE){
+        while(1){
 
             Vector2i pixelPos = Mouse::getPosition(window);
             Vector2f pos = window.mapPixelToCoords(pixelPos);
+
             Event event;
-            x = pos.x;
-            y = pos.y;
-            X = div(x, 105).quot * 105;
-            Y = div(y, 120).quot * 120;
             while (window.pollEvent(event))
             {
                 if (event.type == Event::Closed)
                     window.close();
             }
-            if (Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, 37) && !is_road(roads, pos) && !is_house(houses, pos)){
-                houses->houses.push_back(new House(SRPX, SRPY, spr));
-                houses->houses_count++;
+
+            if (Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos) && !is_road(roads, pos) && !is_house(houses, pos)){
+                x = pos.x;
+                y = pos.y;
+                X = div(x, 37).quot * 37;
+                Y = div(y, 37).quot * 37;
                 houses->houses[houses->houses_count-1]->house_sprite.setPosition(Vector2f(X, Y));
+                isMove = false;
+                OSPT = false;
+                return false;
             }
 
-            if (Mouse::isButtonPressed(Mouse::Left)){
+            if (Mouse::isButtonPressed(Mouse::Left) && !isMove){
                 if (spr->house_sprite.getGlobalBounds().contains(pos.x, pos.y))
                 {
+                    if(OSPT == false){
+                        houses->houses.push_back(new House(SRPX, SRPY, spr));
+                        houses->houses_count++;
+                    }
                     isMove = true;
-                }
-                else{
-                    return false;
+                    OSPT = true;
                 }
             }
 
             if (isMove) {
-                house_sprite.setPosition(X, Y);
+                houses->houses[houses->houses_count-1]->house_sprite.setPosition(pos.x, pos.y);
             }
             window.clear(Color::White);
             draw_all(window, spr, houses, roads);
-            window.draw(house_sprite);
             window.display();
         }
-
+    }
 }
 
 void game_start(RenderWindow &window){
@@ -147,13 +143,14 @@ void game_start(RenderWindow &window){
     Roads *roads = new Roads();
     roads->roads_count = 0;
 
-    Player *player = new Player(0, 0);
-
     Vector2i localPosition;
     Vector2f localPosf;
 
-    view.reset(sf::FloatRect(0, 0, screen_width, screen_heigh));
+    float x, y, X = 800, Y = 600;
+    //view.reset(sf::FloatRect(0, 0, 1366,768));
+    view.reset(sf::FloatRect(0, 0, 1920,1080));
     bool isMove = false;
+    float a;
 
     while(window.isOpen()){
         float time = clock.getElapsedTime().asMicroseconds();
@@ -182,10 +179,7 @@ void game_start(RenderWindow &window){
             if (event.type == Event::Closed)
                 window.close();
         }
-        if(Mouse::isButtonPressed(Mouse::Left) && player->sprite.getGlobalBounds().contains(localPosf.x, localPosf.y))
-           player->isSelect = true;
-        if(Mouse::isButtonPressed(Mouse::Right) && player->isSelect && !player->sprite.getGlobalBounds().contains(localPosf.x, localPosf.y))
-            move_player(player, window);
+
         if(Mouse::isButtonPressed(Mouse::Left) && !isMove && spr->road_sprite_gorizontal.getGlobalBounds().contains(localPosf.x, localPosf.y)){
             isMove = drag_n_drop(window, roads, houses, spr, IS_ROAD);
         }
@@ -195,25 +189,18 @@ void game_start(RenderWindow &window){
 
         if(Keyboard::isKeyPressed(Keyboard::Escape)){
             view.setCenter(0, 0);
-            view.reset(sf::FloatRect(0, 0, screen_width, screen_heigh));
+            //view.reset(sf::FloatRect(0, 0, 1366,768));
+            view.reset(sf::FloatRect(0, 0, 1920,1080));
             window.setView(view);
             menu(window);
         }
+		window.setView(view);
 
         window.clear(Color::White);
 
         std::cout << roads->roads_count;
         draw_all(window, spr, houses, roads);
-        window.draw(player->sprite);
-        window.setView(view);
+        draw_roads(roads, window);
         window.display();
         }
-}
-
-void move_player(Player * player, RenderWindow &window){
-        Vector2i pixelPos = Mouse::getPosition(window);
-		Vector2f pos = window.mapPixelToCoords(pixelPos);
-		player->isMove = true;
-
-
 }

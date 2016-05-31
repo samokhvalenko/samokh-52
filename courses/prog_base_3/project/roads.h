@@ -12,12 +12,14 @@ public:
     int dir;
     Sprite road_sprite;
     float state;
+    bool state_b;
 
     Road(float X, float Y, Sprites *spr){
         road_sprite.setTexture(spr->Sprites::road_texture);
-        road_sprite.setTextureRect(IntRect(585, 130, 37, 37));
+        road_sprite.setTextureRect(IntRect(585, 127, 37, 40));
         road_sprite.setPosition(X, Y);
         state = 100;
+        state_b = 1;
 
     }
 };
@@ -28,7 +30,8 @@ void road_update(Road *road, Texture &crashed_texture)
     road->state = road->state * 0.99994;
     if(road->state < 50){
         road->road_sprite.setTexture(crashed_texture);
-        road->road_sprite.setTextureRect(IntRect(585, 130, 37, 37));
+        road->road_sprite.setTextureRect(IntRect(585, 127, 37, 40));
+        road->state_b = 0;
     }
 }
 
@@ -50,8 +53,9 @@ void draw_roads(Roads *roads, RenderWindow &window){
 }
 
 bool is_road(Roads *roads, Vector2f pos){
-    for(int i = 0; i < roads->roads_count; i++){
-        if(roads->roads[i]->road_sprite.getGlobalBounds().contains(pos))
+    //std::cout << "\nX :" << pos.x << "\nY :" << pos.y;
+    for(int i = 0; i < roads->roads_count-1; i++){
+        if(roads->roads[i]->road_sprite.getGlobalBounds().contains( pos))
             return true;
     }
     return false;

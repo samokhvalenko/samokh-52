@@ -7,11 +7,11 @@ public:
     int dir;
     Image road_image;
     Texture road_texture, crashed_texture;
-    Sprite road_sprite;
+    Sprite house_sprite;
 
     House(float X, float Y, Sprites *spr){
-        road_sprite.setTexture(spr->Sprites::house_texture);
-        road_sprite.setPosition(X, Y);
+        house_sprite.setTexture(spr->Sprites::house_texture);
+        house_sprite.setPosition(X, Y);
 
     }
 };
@@ -26,5 +26,20 @@ public:
         house_texture.loadFromFile("house_small.png");
     }
 };
+
+void draw_houses(Houses * houses, RenderWindow &window){
+    for(int i = 0; i < houses->houses_count; i++){
+        window.draw(houses->houses[i]->house_sprite);
+    }
+}
+
+bool is_house(Houses * houses, Vector2f pos){
+    //std::cout << "\nX :" << pos.x << "\nY :" << pos.y;
+    for(int i = 0; i < houses->houses_count-1; i++){
+        if(houses->houses[i]->house_sprite.getGlobalBounds().contains(pos))
+            return true;
+    }
+    return false;
+}
 
 #endif // HOUSE_H_INCLUDED

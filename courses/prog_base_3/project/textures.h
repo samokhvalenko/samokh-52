@@ -12,10 +12,10 @@
 #define BGSC 50
 #define width 2500
 #define heigh 1500
-#define screen_width 1920
-#define screen_heigh 1080
-//#define screen_width 1366
-//#define screen_heigh 768
+//#define screen_width 1920
+//#define screen_heigh 1080
+#define screen_width 1366
+#define screen_heigh 768
 
 using namespace sf;
 
@@ -60,12 +60,12 @@ public:
         house_texture.loadFromFile("house_small.png");
         house_sprite.setTexture(house_texture);
         house_sprite.setPosition(SHPX, SHPY);
-        font.loadFromFile("arial.ttf");
+        /*font.loadFromFile("arial.ttf");
         house_1_w_t.setString("House for 1 worker");
         house_1_w_t.setFont(font);
         house_1_w_t.setCharacterSize(100);
         house_1_w_t.setColor(Color::Black);
-        house_1_w_t.setPosition(1266, 120);
+        house_1_w_t.setPosition(1266, 120);*/
 
     }
 
@@ -74,10 +74,10 @@ public:
         window.draw(rectangle);
     }
 
-    bool isObj( Vector2f pos){
-        if(rectangle.getGlobalBounds().contains(pos.x, pos.y))
+    bool isSidepanel( Vector2f pos, int f_width){
+        if(rectangle.getGlobalBounds().contains(pos.x + f_width, pos.y))
             return true;
-        return false;
+    return false;
     }
 };
 

@@ -457,7 +457,7 @@
 	<SFML/Window.hpp>
 	"roads.h"
 
-1464286396 source:c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\game.cpp
+1464715759 source:c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\game.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<vector>
@@ -468,7 +468,9 @@
 	"menu.h"
 	"view.h"
 	"textures.h"
+	"city.h"
 	"roads.h"
+	"house.h"
 
 1464088168 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\menu.h
 	<SFML/Graphics.hpp>
@@ -476,16 +478,16 @@
 1464088168 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\view.h
 	<SFML/Graphics.hpp>
 
-1464283985 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\textures.h
+1464713248 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\textures.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 
-1464281739 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\roads.h
+1464711926 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\roads.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	"textures.h"
 
-1464281516 source:c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\main.cpp
+1464713248 source:c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"menu.h"
@@ -497,4 +499,11 @@
 1464088168 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\game.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
+
+1464709388 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\house.h
+
+1464715778 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\city.h
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	"textures.h"
 

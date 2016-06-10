@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
+#include <math.h>
 #include <vector>
 #include <list>
 #include <iostream>
@@ -12,169 +12,157 @@
 #include "textures.h"
 #include "city.h"
 #include "roads.h"
+#include "cars.h"
 #include "house.h"
-void move_player(Player * player, RenderWindow &window);
 
-enum status {IS_ROAD = 1, IS_HOUSE = 2};
+#define car_start_pos_x 250
+#define car_start_pos_y 19
 
-void draw_all(RenderWindow &window, Sprites *spr, Houses * houses, Roads * roads){
+void move_worker(Worker * worker, RenderWindow &window, float time, float &CurrentFrame, Houses * houses, Roads *roads);
+void drag_n_drop(RenderWindow &window, Roads* roads, Houses * houses, Sprites *spr, Worker *worker, Cars *cars, Player *player, status status);
+
+void draw_all(RenderWindow &window, Sprites *spr, Houses * houses, Roads * roads, Worker * worker, Player * player, Cars *cars){
     window.clear(Color::White);
     window.draw(spr->back_game_sprite);
-
     draw_roads(roads, window);
+    cars->draw_cars(window);
     draw_houses(houses, window);
-    window.draw(spr->rectangle);
+    window.draw(spr->side_rectangle);
     window.draw(spr->rect_road);
-    window.draw(spr->road_sprite_gorizontal);
+    window.draw(spr->road_sprite_side_panel);
     window.draw(spr->house_sprite);
     window.draw(spr->house_1_w_t);
+    window.draw(player->cash_t);
+    window.draw(player->cash_t2);
+    window.draw(player->t_name);
+    window.draw(worker->sprite);
+    window.draw(spr->rep_br_r);
+    window.draw(spr->rep_br);
+    window.draw(spr->rep_all_r_r);
+    window.draw(spr->rep_all_r);
+    window.draw(spr->rep_all_r_price);
+    window.draw(spr->rep_br_price);
+    window.draw(spr->road_text);
+    window.draw(spr->house_text);
+    window.draw(spr->car_sprite_1);
+    window.draw(spr->car_sprite_2);
+    window.draw(spr->car_sprite_3);
+    window.draw(spr->car_1_price);
+    window.draw(spr->car_2_price);
+    window.draw(spr->car_3_price);
 }
 
-void side_panel_move(Sprites *spr, time_t x, time_t y, View &view){
-    spr->road_sprite_gorizontal.move(x, y);
-    spr->rectangle.move(x, y);
+void side_panel_move(Sprites *spr, time_t x, time_t y, View &view, Player *player){
+    spr->road_sprite_side_panel.move(x, y);
+    spr->side_rectangle.move(x, y);
     spr->house_sprite.move(x, y);
     spr->rect_road.move(x, y);
     spr->house_1_w_t.move(x, y);
+    spr->rep_br.move(x, y);
+    spr->rep_br_r.move(x, y);
+    spr->rep_all_r_price.move(x, y);
+    spr->rep_br_price.move(x, y);
+    spr->rep_all_r_r.move(x, y);
+    spr->rep_all_r.move(x, y);
+    spr->road_text.move(x, y);
+    spr->house_text.move(x, y);
+    spr->car_sprite_1.move(x, y);
+    spr->car_sprite_2.move(x, y);
+    spr->car_sprite_3.move(x, y);
+    spr->car_1_price.move(x, y);
+    spr->car_2_price.move(x, y);
+    spr->car_3_price.move(x, y);
+    player->cash_t.move(x, y);
+    player->cash_t2.move(x, y);
+    player->t_name.move(x, y);
     view.move(x, y);
-}
-
-bool drag_n_drop(RenderWindow &window, Roads* roads, Houses * houses, Sprites *spr, status status){
-    bool isMove = true;
-    //bool OSPT = false;
-    float x, y, X = 800, Y = 600;
-
-    if(status == IS_ROAD){
-        while(1){
-            Sprite road_sprite;
-            Texture road_texture;
-
-            road_texture.loadFromFile("roads.png");
-            road_sprite.setTexture(road_texture);
-            road_sprite.setTextureRect(IntRect(585, 127, 37, 40));
-            Vector2i pixelPos = Mouse::getPosition(window);
-            Vector2f pos = window.mapPixelToCoords(pixelPos);
-            x = pos.x;
-            y = pos.y;
-            X = div(x, 37).quot * 37;
-            Y = div(y, 40).quot * 40;
-            Event event;
-            while (window.pollEvent(event))
-            {
-                if (event.type == Event::Closed)
-                    window.close();
-            }
-            if (Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, 37) && !is_road(roads, pos) && !is_house(houses, pos)){
-
-                roads->roads.push_back(new Road(SRPX, SRPY, spr));
-                roads->roads_count++;
-                roads->roads[roads->roads_count-1]->road_sprite.setPosition(Vector2f(X, Y));
-            }
-
-            if (Mouse::isButtonPressed(Mouse::Left)){
-                if (spr->road_sprite_gorizontal.getGlobalBounds().contains(pos.x, pos.y))
-                {
-                    isMove = true;
-                }
-                else{
-                    return false;
-                }
-            }
-
-            if (isMove) {
-                road_sprite.setPosition(X, Y);
-            }
-            window.clear(Color::White);
-            draw_all(window, spr, houses, roads);
-            window.draw(road_sprite);
-            window.display();
-        }
-    }
-    while(1){
-            Sprite house_sprite;
-            Texture house_texture;
-
-            house_texture.loadFromFile("house_small.png");
-            house_sprite.setTexture(house_texture);
-
-            Vector2i pixelPos = Mouse::getPosition(window);
-            Vector2f pos = window.mapPixelToCoords(pixelPos);
-            Event event;
-            x = pos.x;
-            y = pos.y;
-            X = div(x, 105).quot * 105;
-            Y = div(y, 120).quot * 120;
-            while (window.pollEvent(event))
-            {
-                if (event.type == Event::Closed)
-                    window.close();
-            }
-            if (Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, 37) && !is_road(roads, pos) && !is_house(houses, pos)){
-                houses->houses.push_back(new House(SRPX, SRPY, spr));
-                houses->houses_count++;
-                houses->houses[houses->houses_count-1]->house_sprite.setPosition(Vector2f(X, Y));
-            }
-
-            if (Mouse::isButtonPressed(Mouse::Left)){
-                if (spr->house_sprite.getGlobalBounds().contains(pos.x, pos.y))
-                {
-                    isMove = true;
-                }
-                else{
-                    return false;
-                }
-            }
-
-            if (isMove) {
-                house_sprite.setPosition(X, Y);
-            }
-            window.clear(Color::White);
-            draw_all(window, spr, houses, roads);
-            window.draw(house_sprite);
-            window.display();
-        }
 
 }
 
 void game_start(RenderWindow &window){
     Font font;
+
     font.loadFromFile("arial.ttf");
+
     Clock clock;
+
     Vector2f net_pos;
+
+    Player *player = new Player("Stas");
+    player->cash_t.setFont(font);
+    player->cash_t2.setFont(font);
+    player->t_name.setFont(font);
+
+    float CurrentFrame = 0;
+    float x_st, y_st, time_tmp;
+
     Sprites *spr = new Sprites(font);
+
     Houses *houses = new Houses();
     houses->houses_count = 0;
+
     Roads *roads = new Roads();
     roads->roads_count = 0;
 
-    Player *player = new Player(0, 0);
+    int road_select = 0;
+
+    Cars *cars = new Cars;
+    cars->cars_count = 0;
+    cars->cars.push_back(new Car(car_start_pos_y, car_start_pos_x, 1, spr));
+    cars->cars_count++;
+    int i;
+    for(i = 0; i < 8; i++){
+        x_st = road_width * i;
+        y_st = road_heigh * 6;
+        roads->roads.push_back(new Road(x_st, y_st, spr));
+        roads->roads[roads->roads_count]->road_sprite.setPosition(Vector2f(x_st, y_st));
+        roads->roads_count++;
+    }
+
+
+    Worker *worker = new Worker(0, 0);
 
     Vector2i localPosition;
     Vector2f localPosf;
-
+    float distance = 0, x_mov, y_mov;
     view.reset(sf::FloatRect(0, 0, screen_width, screen_heigh));
     bool isMove = false;
+
+    spr->rep_br.setFont(font);
+    spr->rep_all_r.setFont(font);
+    spr->rep_all_r_price.setFont(font);
+    spr->rep_br_price.setFont(font);
+    spr->road_text.setFont(font);
+    spr->house_text.setFont(font);
+    spr->no_money_text.setFont(font);
+    spr->house_or.setFont(font);
+    spr->road_nr.setFont(font);
+    spr->car_1_price.setFont(font);
+    spr->car_2_price.setFont(font);
+    spr->car_3_price.setFont(font);
+
 
     while(window.isOpen()){
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
-        time = time/800;
+        time = time/200;
         localPosition = Mouse::getPosition(window);
         localPosf = window.mapPixelToCoords(localPosition);
 
         if (localPosition.x < 10 && localPosf.x > 0 && view.getCenter().x > screen_width/2 + 3 ){
-                side_panel_move(spr, -0.2*time, 0, view);
+                side_panel_move(spr, -0.2*time/7, 0, view, player);
+
         }
-		if (localPosition.x > window.getSize().x-50 && (view.getCenter().x + screen_width/2) + 2 < spr->back_game_image.getSize().x){
-                side_panel_move(spr, 0.2*time, 0, view);
+		if (localPosition.x > window.getSize().x-10 && (view.getCenter().x + screen_width/2) + 2 < spr->back_game_image.getSize().x){
+                side_panel_move(spr, 0.2*time/7, 0, view, player);
+
         }
-		if (localPosition.y > window.getSize().y-100 && (view.getCenter().y + screen_heigh/2) + 5 < spr->back_game_image.getSize().y) {
-                side_panel_move(spr, 0, 0.2*time, view);
+		if (localPosition.y > window.getSize().y-10 && (view.getCenter().y + screen_heigh/2) + 5 < spr->back_game_image.getSize().y) {
+                side_panel_move(spr, 0, 0.2*time/7, view, player);
         }
-		if (localPosition.y < 15 && view.getCenter().y > screen_heigh/2 + 2) {
-                side_panel_move(spr, 0, -0.2*time, view);
+		if (localPosition.y < 15 && view.getCenter().y > screen_heigh/2 + 2){
+                side_panel_move(spr, 0, -0.2*time/7, view, player);
         }
-        //std::cout << view.getCenter().y << "\n";
 
         Event event;
         while (window.pollEvent(event))
@@ -182,15 +170,46 @@ void game_start(RenderWindow &window){
             if (event.type == Event::Closed)
                 window.close();
         }
-        if(Mouse::isButtonPressed(Mouse::Left) && player->sprite.getGlobalBounds().contains(localPosf.x, localPosf.y))
-           player->isSelect = true;
-        if(Mouse::isButtonPressed(Mouse::Right) && player->isSelect && !player->sprite.getGlobalBounds().contains(localPosf.x, localPosf.y))
-            move_player(player, window);
-        if(Mouse::isButtonPressed(Mouse::Left) && !isMove && spr->road_sprite_gorizontal.getGlobalBounds().contains(localPosf.x, localPosf.y)){
-            isMove = drag_n_drop(window, roads, houses, spr, IS_ROAD);
+
+        if(Mouse::isButtonPressed(Mouse::Left) && worker->sprite.getGlobalBounds().contains(localPosf.x, localPosf.y)){
+            worker->isSelect = true;
+        }
+        if(Mouse::isButtonPressed(Mouse::Left) && worker->isSelect == true && !worker->sprite.getGlobalBounds().contains(localPosf.x, localPosf.y)){
+            worker->isSelect = false;
+        }
+
+        if(Mouse::isButtonPressed(Mouse::Left) && spr->is_br_road_rep(localPosf))
+            roads->repair_broken_roads();
+
+        if(Mouse::isButtonPressed(Mouse::Left) && spr->is_all_road_rep(localPosf))
+            roads->repair_all_roads();
+
+        if(Mouse::isButtonPressed(Mouse::Left) && !roads->is_road(localPosf, OTHER))
+            spr->road_selected = false;
+
+        if(Mouse::isButtonPressed(Mouse::Left) && roads->is_road(localPosf, IS_REPAIRING)){
+            road_select = roads->is_road(localPosf, IS_REPAIRING);
+            spr->road_selected = true;
+        }
+
+        if(Mouse::isButtonPressed(Mouse::Right) && worker->isSelect){
+            x_mov = localPosf.x;
+            y_mov = localPosf.y;
+            worker->set_mov(Vector2f(x_mov,y_mov));
+            worker->isMove = true;
+        }
+        distance = sqrt((worker->pos_mov.x - worker->x)*(worker->pos_mov.x - worker->x) + (worker->pos_mov.y - worker->y)*(worker->pos_mov.y - worker->y));
+        if(Mouse::isButtonPressed(Mouse::Left) && !isMove && spr->road_sprite_side_panel.getGlobalBounds().contains(localPosf.x, localPosf.y)){
+            time_tmp = time;
+            drag_n_drop(window, roads, houses, spr, worker, cars, player, IS_ROAD);
+            isMove = false;
+            time = time_tmp;
         }
         if(Mouse::isButtonPressed(Mouse::Left) && !isMove && spr->house_sprite.getGlobalBounds().contains(localPosf.x, localPosf.y)){
-            isMove = drag_n_drop(window, roads, houses, spr, IS_HOUSE);
+            time_tmp = time;
+            drag_n_drop(window, roads, houses, spr, worker, cars, player, IS_HOUSE);
+            isMove = false;
+            time = time_tmp;
         }
 
         if(Keyboard::isKeyPressed(Keyboard::Escape)){
@@ -200,20 +219,174 @@ void game_start(RenderWindow &window){
             menu(window);
         }
 
-        window.clear(Color::White);
+        draw_all(window, spr, houses, roads, worker, player, cars);
 
-        std::cout << roads->roads_count;
-        draw_all(window, spr, houses, roads);
-        window.draw(player->sprite);
+        move_worker(worker, window, time, CurrentFrame, houses, roads);
+        cars->update(roads, houses, player);
+        roads->Roads::rs_update(time, spr);
+        player->update();
         window.setView(view);
         window.display();
-        }
+    }
 }
 
-void move_player(Player * player, RenderWindow &window){
-        Vector2i pixelPos = Mouse::getPosition(window);
-		Vector2f pos = window.mapPixelToCoords(pixelPos);
-		player->isMove = true;
 
 
+void drag_n_drop(RenderWindow &window, Roads* roads, Houses * houses, Sprites *spr, Worker *worker, Cars *cars, Player *player, status status){
+    bool isMove = true;
+    Clock clock;
+    float x, y, X, Y;
+    Vector2i pixelPos = Mouse::getPosition(window);
+    Vector2f pos = window.mapPixelToCoords(pixelPos);
+    bool flag = false, no_money_flag = false, near_rr_flag = false, not_near_house = false, not_on_road = false, not_on_right_road = false;
+    float timer = 100, not_near_road_timer = 1;
+    bool is_road_up = false, is_road_down = false, is_road_l = false, is_road_r = false, near_road = false;
+    if(status == IS_ROAD){
+        while(1){
+            float time = clock.getElapsedTime().asMicroseconds();
+            clock.restart();
+            time = time/300;
+            Sprite road_sprite;
+            pixelPos = Mouse::getPosition(window);
+            pos = window.mapPixelToCoords(pixelPos);
+            road_sprite = spr->road_sprite_side_panel;
+            x = pos.x;
+            y = pos.y;
+            X = div(x, road_width).quot * road_width;
+            Y = div(y, road_heigh).quot * road_heigh;
+            Event event;
+            while (window.pollEvent(event))
+                if (event.type == Event::Closed)
+                    window.close();
+            if (!flag && Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, road_width) && !roads->is_road(Vector2f(X, Y), OTHER) && !roads->is_road(pos, OTHER) && !is_house(houses, pos, IS_ROAD)){
+                bool near_roads = false;
+
+                is_road_up = roads->is_road(Vector2f(X, Y - road_heigh), OTHER);
+                is_road_down = roads->is_road(Vector2f(X, Y + road_heigh), OTHER);
+                is_road_l = roads->is_road(Vector2f(X - road_width, Y), OTHER);
+                is_road_r = roads->is_road(Vector2f(X + road_width, Y), OTHER);
+
+                if(is_road_up || is_road_down || is_road_l || is_road_r)
+                    near_roads = true;
+
+                if(player->cash >= 150 && near_roads && roads->check_roads(Vector2f(X, Y))){
+                    roads->roads.push_back(new Road(X, Y, spr));
+                    roads->roads_count++;
+                    roads->roads[roads->roads_count-1]->road_sprite.setPosition(Vector2f(X, Y));
+                    flag = true;
+                    player->cash-=150;
+                }
+                else if(player->cash < 150){
+                    spr->no_money_text.setPosition(X, Y - 10);
+                    no_money_flag = true;
+                    timer = 100;
+                }
+                else if(!near_roads){
+                    timer = 100;
+                    spr->road_nr.setPosition(X, Y - 10);
+                    near_rr_flag = true;
+                }
+            }
+
+            if( !Mouse::isButtonPressed(Mouse::Right))
+                flag = false;
+
+            if (Mouse::isButtonPressed(Mouse::Left)){
+                if (spr->road_sprite_side_panel.getGlobalBounds().contains(pos.x, pos.y))
+                    isMove = true;
+                else
+                    return;
+            }
+
+            if (isMove)
+                road_sprite.setPosition(X, Y);
+
+            window.clear(Color::White);
+            player->update();
+            draw_all(window, spr, houses, roads, worker, player, cars);
+            window.draw(road_sprite);
+            window.draw(cars->cars[0]->sprite);
+            if(near_rr_flag && timer > 1){
+                window.draw(spr->road_nr);
+                timer *=0.85;
+            }
+            if(no_money_flag && timer > 1){
+                window.draw(spr->no_money_text);
+                timer *=0.85;
+            }
+            else
+                no_money_flag = false;
+            window.display();
+        }
+    }
+    if(status == IS_HOUSE)
+    while(1){
+            float time = clock.getElapsedTime().asMicroseconds();
+            clock.restart();
+            time = time/300;
+            Sprite house_sprite;
+            house_sprite = spr->house_sprite;
+            pixelPos = Mouse::getPosition(window);
+            pos = window.mapPixelToCoords(pixelPos);
+            Event event;
+            x = pos.x;
+            y = pos.y;
+            X = div(x, road_width).quot * road_width;
+            Y = div(y, road_heigh).quot * road_heigh;
+            while (window.pollEvent(event))
+                if (event.type == Event::Closed)
+                    window.close();
+
+            near_road = roads->is_road(Vector2f(X, Y + 121), OTHER);
+            not_near_house = !is_house(houses, pos, IS_HOUSE);
+            not_on_road = !roads->is_road(Vector2f(pos.x-10, pos.y + 100), OTHER);
+            not_on_right_road = !roads->is_road(Vector2f(pos.x + 85, pos.y + 100), OTHER);
+            if(Mouse::isButtonPressed(Mouse::Right) && !near_road){
+                not_near_road_timer = 100;
+                spr->house_or.setPosition(X, Y - 10);
+            }
+
+            if (!flag && Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, road_width) && not_on_road && not_near_house && near_road && not_on_right_road){
+                 if(player->cash >= 500){
+                    houses->houses.push_back(new House(X, Y, spr));
+                    houses->houses_count++;
+                    houses->houses[houses->houses_count-1]->house_sprite.setPosition(Vector2f(X, Y));
+                    player->cash-=500;
+                    houses->houses_sort();
+                 }
+                 else if(player->cash < 500){
+                    spr->no_money_text.setPosition(X, Y - 10);
+                    no_money_flag = true;
+                    timer = 100;
+                 }
+            }
+            if( !Mouse::isButtonPressed(Mouse::Right))
+                flag = false;
+            if (Mouse::isButtonPressed(Mouse::Left)){
+                if (spr->house_sprite.getGlobalBounds().contains(pos.x, pos.y))
+                    isMove = true;
+                else
+                    return;
+            }
+
+            if (isMove)
+                house_sprite.setPosition(X, Y);
+            window.clear(Color::White);
+            player->update();
+            draw_all(window, spr, houses, roads, worker, player, cars);
+            window.draw(house_sprite);
+            if(!near_road && not_near_road_timer > 1){
+                window.draw(spr->house_or);
+                not_near_road_timer *=0.85;
+            }
+            window.draw(cars->cars[0]->sprite);
+            if(no_money_flag && timer > 1){
+                window.draw(spr->no_money_text);
+                timer *=0.85;
+            }
+            else
+                no_money_flag = false;
+            window.draw(cars->cars[0]->sprite);
+            window.display();
+        }
 }

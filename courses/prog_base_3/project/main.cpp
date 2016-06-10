@@ -12,7 +12,7 @@ int main()
     RenderWindow window(VideoMode(1366, 768), "Road Master");
     //RenderWindow window(VideoMode(800, 700), "Road Master");
 
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(25);
     menu(window);
     return 0;
 }

@@ -3,17 +3,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-#define SRPX 1270
+#define SRPX 1290
 #define SRPY 25
 #define SHPX 1266
-#define SHPY 80
+#define SHPY 100
 #define ngS_h_r2bomX 300
 #define ngS_h_r2bomY 300
 #define BGSC 50
 #define width 2500
 #define heigh 1500
-//#define screen_width 1920
-//#define screen_heigh 1080
 #define screen_width 1366
 #define screen_heigh 768
 
@@ -23,16 +21,24 @@ class Sprites{
 public:
     Texture back_game_texture;
     Texture road_texture, crashed_road_texture;
-    Sprite road_sprite_gorizontal;
+    Sprite road_sprite_side_panel;
     Sprite ngS_h_r2bom;
     Texture ngT_h_r2bom;
     Sprite back_game_sprite;
-    RectangleShape rectangle, rect_road;
+    RectangleShape side_rectangle, rect_road;
     Image back_game_image;
     Texture house_texture;
     Sprite house_sprite;
     Text house_1_w_t;
-    Sprite back_game_sprites[BGSC];
+
+
+    Sprite car_sprite_1, car_sprite_2, car_sprite_3;
+    Text car_1_price, car_2_price, car_3_price;
+    Texture car_texture;
+
+    Text rep_br, rep_all_r, rep_br_price, rep_all_r_price, road_text, house_text, no_money_text, house_or, road_nr;
+    RectangleShape rep_br_r, rep_all_r_r;
+    bool road_selected;
 
     Sprites(Font font){
         back_game_image.loadFromFile("TGX0.png");
@@ -41,44 +47,130 @@ public:
         back_game_sprite.setPosition(0, 0);
         road_texture.loadFromFile("roads.png");
         crashed_road_texture.loadFromFile("roads_crashed.png");
-        road_sprite_gorizontal.setTexture(road_texture);
-        road_sprite_gorizontal.setTextureRect(IntRect(585, 130, 37, 37));
-        road_sprite_gorizontal.setPosition(SRPX, SRPY);
-        ngT_h_r2bom.loadFromFile("ng_h_r2bom.png");
-        ngS_h_r2bom.setTexture(ngT_h_r2bom);
-        ngS_h_r2bom.setPosition(ngS_h_r2bomX, ngS_h_r2bomY);
-        rectangle.setSize(Vector2f(100, 768));
-        rectangle.setFillColor(Color(191, 168, 32));
-        rectangle.setOutlineThickness(5);
-        rectangle.setOutlineColor(Color::Black);
-        rectangle.setPosition(1266, 0);
+        road_sprite_side_panel.setTexture(road_texture);
+        road_sprite_side_panel.setTextureRect(IntRect(585, 127, 37, 40));
+        road_sprite_side_panel.setPosition(SRPX, SRPY);
+        side_rectangle.setSize(Vector2f(106, 768));
+        side_rectangle.setFillColor(Color::Cyan);
+        side_rectangle.setOutlineThickness(5);
+        side_rectangle.setOutlineColor(Color::Black);
+        side_rectangle.setPosition(1260, 0);
         rect_road.setSize(Vector2f(37, 37));
         rect_road.setFillColor(Color::Black);
         rect_road.setOutlineThickness(5);
         rect_road.setOutlineColor(Color::Black);
-        rect_road.setPosition(1270, 25);
+        rect_road.setPosition(1290, 25);
         house_texture.loadFromFile("house_small.png");
         house_sprite.setTexture(house_texture);
         house_sprite.setPosition(SHPX, SHPY);
-        /*font.loadFromFile("arial.ttf");
-        house_1_w_t.setString("House for 1 worker");
-        house_1_w_t.setFont(font);
-        house_1_w_t.setCharacterSize(100);
-        house_1_w_t.setColor(Color::Black);
-        house_1_w_t.setPosition(1266, 120);*/
 
+        car_texture.loadFromFile("cars.png");
+        car_sprite_1.setTexture(car_texture);
+        car_sprite_2.setTexture(car_texture);
+        car_sprite_3.setTexture(car_texture);
+
+        car_sprite_1.setPosition(1261, 280);
+        car_sprite_2.setPosition(1261, 330);
+        car_sprite_3.setPosition(1261, 380);
+
+        car_sprite_1.setTextureRect(IntRect(0, 107, 37, 19));
+        car_sprite_2.setTextureRect(IntRect(41, 86, 39, 16));
+        car_sprite_3.setTextureRect(IntRect(40, 109, 38, 16));
+
+        rep_br.setString("Repair broken\nroads costs");
+        rep_br.setCharacterSize(15);
+        rep_br.setColor(Color::Black);
+        rep_br.setPosition(1270, 710);
+        rep_br_r.setSize(Vector2f(90, 50));
+        rep_br_r.setFillColor(Color::Yellow);
+        rep_br_r.setOutlineThickness(5);
+        rep_br_r.setOutlineColor(Color::Black);
+        rep_br_r.setPosition(1270, 710);
+
+        rep_all_r.setString("Repair all\nroads costs");
+        rep_all_r.setCharacterSize(15);
+        rep_all_r.setColor(Color::Black);
+        rep_all_r.setPosition(1270, 650);
+
+        rep_all_r_r.setSize(Vector2f(90, 50));
+        rep_all_r_r.setFillColor(Color::Yellow);
+        rep_all_r_r.setOutlineThickness(5);
+        rep_all_r_r.setOutlineColor(Color::Black);
+        rep_all_r_r.setPosition(1270, 650);
+
+        rep_br_price.setCharacterSize(15);
+        rep_br_price.setColor(Color::Black);
+        rep_br_price.setPosition(1270, 740);
+
+        rep_all_r_price.setCharacterSize(15);
+        rep_all_r_price.setColor(Color::Black);
+        rep_all_r_price.setPosition(1270, 680);
+
+        road_text.setString("Road costs\n  150");
+        road_text.setCharacterSize(15);
+        road_text.setColor(Color::Black);
+        road_text.setPosition(1270, 65);
+
+        house_text.setString("House costs\n  500");
+        house_text.setCharacterSize(15);
+        house_text.setColor(Color::Black);
+        house_text.setPosition(1270, 230);
+
+        no_money_text.setString("Not enough money");
+        no_money_text.setCharacterSize(25);
+        no_money_text.setColor(Color::Red);
+
+        house_or.setString("House must be built over the road");
+        house_or.setCharacterSize(25);
+        house_or.setColor(Color::Red);
+
+        road_nr.setString("Road must be built near another road");
+        road_nr.setCharacterSize(25);
+        road_nr.setColor(Color::Red);
+
+        car_1_price.setString("1500");
+        car_1_price.setCharacterSize(15);
+        car_1_price.setColor(Color::Black);
+        car_1_price.setPosition(1310, 280);
+
+        car_2_price.setString("2500");
+        car_2_price.setCharacterSize(15);
+        car_2_price.setColor(Color::Black);
+        car_2_price.setPosition(1310, 330);
+
+        car_3_price.setString("4000");
+        car_3_price.setCharacterSize(15);
+        car_3_price.setColor(Color::Black);
+        car_3_price.setPosition(1310, 380);
+
+        road_selected = false;
     }
 
     void draw_bgs(RenderWindow &window){
         window.draw(back_game_sprite);
-        window.draw(rectangle);
+        window.draw(side_rectangle);
     }
 
     bool isSidepanel( Vector2f pos, int f_width){
-        if(rectangle.getGlobalBounds().contains(pos.x + f_width, pos.y))
+        if(side_rectangle.getGlobalBounds().contains(pos.x + f_width, pos.y))
             return true;
     return false;
     }
+
+    bool is_br_road_rep(Vector2f localPosf){
+        if(rep_br_r.getGlobalBounds().contains(localPosf)){
+            return true;
+        }
+        return false;
+    }
+
+    bool is_all_road_rep(Vector2f localPosf){
+        if(rep_all_r_r.getGlobalBounds().contains(localPosf)){
+            return true;
+        }
+        return false;
+    }
+
 };
 
 #endif // TEXTURES_H_INCLUDED

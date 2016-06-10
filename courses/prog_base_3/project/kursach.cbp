@@ -48,6 +48,7 @@
 		<Linker>
 			<Add directory="C:/Program Files/SFML-2.3.2/lib" />
 		</Linker>
+		<Unit filename="cars.h" />
 		<Unit filename="city.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <math.h>
 
 #include "textures.h"
 #include "roads.h"
@@ -10,7 +11,7 @@
 
 using namespace sf;
 
-class Worker {
+/*class Worker {
 
 public:
 	float w, h, dx, dy,x,y, speed;
@@ -54,40 +55,40 @@ public:
 	float getplayercoordinateY(){
 		return y;
 	}
+    void move_worker(RenderWindow &window, float time, float &CurrentFrame, Houses * houses, Roads *roads){
 
-};
+        float player_nh_pos_x, player_nh_pos_y;
+        float distance = sqrt((pos_mov.x - x)*(pos_mov.x - x) + (pos_mov.y - y)*(pos_mov.y - y));
 
-void move_worker(Worker * worker, RenderWindow &window, float time, float &CurrentFrame, Houses * houses, Roads *roads){
+        player_nh_pos_x = x + 0.001 *time*(pos_mov.x - x) / distance;
+        player_nh_pos_y = y + 0.001 *time*(pos_mov.y - y) / distance;
 
-    float player_nh_pos_x, player_nh_pos_y;
-    float distance = sqrt((worker->pos_mov.x - worker->x)*(worker->pos_mov.x - worker->x) + (worker->pos_mov.y - worker->y)*(worker->pos_mov.y - worker->y));
+        if (distance > 2 && isMove){
+            x += 0.01*time *(pos_mov.x - x) / distance;
+            y += 0.01*time *(pos_mov.y - y) / distance;
+        }
 
-    player_nh_pos_x = worker->x + 0.001 *time*(worker->pos_mov.x - worker->x) / distance;
-    player_nh_pos_y = worker->y + 0.001 *time*(worker->pos_mov.y - worker->y) / distance;
-
-    if (distance > 2 && worker->isMove){
-        worker->x += 0.01*time *(worker->pos_mov.x - worker->x) / distance;
-        worker->y += 0.01*time *(worker->pos_mov.y - worker->y) / distance;
+        if(houses->is_house(Vector2f(player_nh_pos_x, player_nh_pos_y), IS_PLAYER)){
+            x -= 0.01*time *(pos_mov.x - x) / distance;
+            y -= 0.01*time *(pos_mov.y - y) / distance;
+        }
+        if(y < pos_mov.y && distance > 2){
+            CurrentFrame += 0.003*time / 2;
+            if (CurrentFrame > 5)
+                CurrentFrame -= 5;
+            sprite.setTextureRect(IntRect(132 + 24* (int)(CurrentFrame), 96, 16, 24));
+        }
+        else if(y > pos_mov.y && distance > 2){
+            CurrentFrame += 0.003*time / 2;
+            if (CurrentFrame > 5)
+                CurrentFrame -= 5;
+            sprite.setTextureRect(IntRect(132 + 24* (int)(CurrentFrame), 1, 16, 24));
+        }
+        update(roads, time);
     }
+};*/
 
-    if(is_house(houses, Vector2f(player_nh_pos_x, player_nh_pos_y), IS_PLAYER)){
-        worker->x -= 0.01*time *(worker->pos_mov.x - worker->x) / distance;
-        worker->y -= 0.01*time *(worker->pos_mov.y - worker->y) / distance;
-    }
-    if(worker->y < worker->pos_mov.y && distance > 2){
-        CurrentFrame += 0.003*time / 2;
-        if (CurrentFrame > 5)
-            CurrentFrame -= 5;
-        worker->sprite.setTextureRect(IntRect(132 + 24* (int)(CurrentFrame), 96, 16, 24));
-    }
-    else if(worker->y > worker->pos_mov.y && distance > 2){
-        CurrentFrame += 0.003*time / 2;
-        if (CurrentFrame > 5)
-            CurrentFrame -= 5;
-        worker->sprite.setTextureRect(IntRect(132 + 24* (int)(CurrentFrame), 1, 16, 24));
-    }
-    worker->update(roads, time);
-}
+
 
 class Player{
 public:

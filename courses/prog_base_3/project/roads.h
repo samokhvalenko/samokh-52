@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 
 #include "textures.h"
+#include "city.h"
 #define road_heigh 40
 #define road_width 37
 
@@ -66,7 +67,7 @@ public:
     }
 
     void rs_update(float time, Sprites *spr){
-        for( int i = 0; i < roads_count; i++){
+        for( int i = 0; i < roads.size(); i++){
             roads[i]->road_update(i);
         }
         char str[20];
@@ -76,26 +77,34 @@ public:
         spr->rep_br_price.setString(itoa(broken_road_rep_price, str, 10));
     }
 
-    void repair_broken_roads(){
+    void repair_broken_roads(Player *player){
 
-        for(int i = 0; i < roads_count; i++){
+        for(int i = 0; i < roads.size(); i++){
             if(roads[i]->state_b == 0)
                 roads[i]->state = 100;
+            player->cash-=broken_road_rep_price;
         }
     }
 
-    void repair_all_roads(){
+    void repair_all_roads(Player *player){
 
-        for(int i = 0; i < roads_count; i++){
+        for(int i = 0; i < roads.size(); i++){
             roads[i]->state = 100;
         }
+        player->cash-=all_road_rep_price;
     }
+
+    void draw_roads(RenderWindow &window){
+        for(int i = 0; i < roads.size(); i++){
+            window.draw(roads[i]->road_sprite);
+        }
+}
 
     void update_br_prices(){
         int broken_roads_price = 0, br_count = 1;
         float coef = 5;
 
-        for(int i = 0; i < roads_count; i++){
+        for(int i = 0; i < roads.size(); i++){
             if(roads[i]->state_b == 0){
                 broken_roads_price+=50;
                 br_count++;
@@ -110,7 +119,7 @@ public:
         int all_roads_price = 0, all_count = 1;
         float coef = 5;
 
-        for(int i = 0; i < roads_count; i++){
+        for(int i = 0; i < roads.size(); i++){
             if(roads[i]->state_b == 0){
                 all_roads_price+=50;
                 all_count++;
@@ -125,7 +134,7 @@ public:
     }
 
     int is_road(Vector2f pos, status_r status){
-        for(int i = 0; i < roads_count; i++){
+        for(int i = 0; i < roads.size(); i++){
             if(roads[i]->road_sprite.getGlobalBounds().contains( pos)){
                 if(status == IS_REPAIRING){
                     return i;
@@ -171,11 +180,5 @@ public:
     }
 
 };
-
-void draw_roads(Roads *roads, RenderWindow &window){
-    for(int i = 0; i < roads->roads_count; i++){
-        window.draw(roads->roads[i]->road_sprite);
-    }
-}
 
 #endif // ROADS_H_INCLUDED

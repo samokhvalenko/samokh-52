@@ -4,31 +4,42 @@ using namespace sf;
 
 void menu(RenderWindow &window){
 
-    Texture menuTexture1, menuTexture2, menuTexture3, menuTexture1_2, menuTexture2_2, menuTexture3_2, menuBackground;
+    Text new_game, instructions, exit;
 
-    menuTexture1.loadFromFile("new_game.png");// see names of files
-	menuTexture2.loadFromFile("load_game.png");
-	menuTexture3.loadFromFile("exit.png");
+    Sprite menu_bg;
+    Texture menuBackground;
 
-	menuTexture1_2.loadFromFile("new_game2.png");// with bigger letters
-	menuTexture2_2.loadFromFile("load_game2.png");
-	menuTexture3_2.loadFromFile("exit2.png");
+    Font font;
+    font.loadFromFile("arial.ttf");
+
+    new_game.setString("New game");
+    new_game.setFont(font);
+    new_game.setCharacterSize(30);
+    new_game.setColor(Color::Black);
+    new_game.setPosition(100, 30);
+
+    instructions.setString("Instructions");
+    instructions.setFont(font);
+    instructions.setCharacterSize(30);
+    instructions.setColor(Color::Black);
+    instructions.setPosition(100, 90);
+
+    exit.setString("Exit");
+    exit.setFont(font);
+    exit.setCharacterSize(30);
+    exit.setColor(Color::Black);
+    exit.setPosition(100, 150);
 
 	menuBackground.loadFromFile("menu_background.jpg");
-
-	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), menuBg(menuBackground);
-
-	menu1.setPosition(100, 30); // sets the position of sprite
-	menu2.setPosition(100, 90);
-	menu3.setPosition(100, 150);
-	menuBg.setPosition(0, 0);
+	menu_bg.setTexture(menuBackground);
 
 	while (window.isOpen())
 	{
 	    window.clear(Color::White);
-	    menu1.setTexture(menuTexture1);
-	    menu2.setTexture(menuTexture2);
-	    menu3.setTexture(menuTexture3);
+
+	    new_game.setCharacterSize(30);
+	    instructions.setCharacterSize(30);
+	    exit.setCharacterSize(30);
 
 	    sf::Event event;
         while (window.pollEvent(event))
@@ -38,27 +49,27 @@ void menu(RenderWindow &window){
         }
 
 
-		if (IntRect(135, 40, 220, 30).contains(Mouse::getPosition(window))){
-            menu1.setTexture(menuTexture1_2);
+		if (IntRect(100, 30, 220, 30).contains(Mouse::getPosition(window))){
+            new_game.setCharacterSize(40);
             if (Mouse::isButtonPressed(Mouse::Left)){
                 game_start(window);
             }
         }
-		if (IntRect(130, 100, 150, 30).contains(Mouse::getPosition(window))){
-            menu2.setTexture(menuTexture2_2);
+		if (IntRect(100, 90, 150, 30).contains(Mouse::getPosition(window))){
+            instructions.setCharacterSize(40);
             if (Mouse::isButtonPressed(Mouse::Left))
                 window.close();
         }
-		if (IntRect(130, 150, 45, 30).contains(Mouse::getPosition(window))){
-            menu3.setTexture(menuTexture3_2);
+		if (IntRect(100, 150, 45, 30).contains(Mouse::getPosition(window))){
+            exit.setCharacterSize(40);
             if (Mouse::isButtonPressed(Mouse::Left))
                 window.close();
         }
 
-		window.draw(menuBg);
-		window.draw(menu1);
-		window.draw(menu2);
-		window.draw(menu3);
+		window.draw(menu_bg);
+		window.draw(new_game);
+		window.draw(instructions);
+		window.draw(exit);
 
 		window.display();
 	}

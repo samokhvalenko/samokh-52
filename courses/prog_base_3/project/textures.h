@@ -171,6 +171,24 @@ public:
         return false;
     }
 
+    bool car_1spr(Vector2f pos){
+        if(car_sprite_1.getGlobalBounds().contains(pos))
+            return true;
+        return false;
+    }
+
+    bool car_2spr(Vector2f pos){
+        if(car_sprite_2.getGlobalBounds().contains(pos))
+            return true;
+        return false;
+    }
+
+    bool car_3spr(Vector2f pos){
+        if(car_sprite_3.getGlobalBounds().contains(pos))
+            return true;
+        return false;
+    }
+
 };
 
 #endif // TEXTURES_H_INCLUDED

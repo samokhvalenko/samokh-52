@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include <iostream>
+#include <cstdlib>
 #include "textures.h"
 #include "city.h"
 #define road_heigh 40
@@ -73,8 +75,12 @@ public:
         char str[20];
         update_all_r_prices();
         update_br_prices();
-        spr->rep_all_r_price.setString(itoa(all_road_rep_price, str, 10));
-        spr->rep_br_price.setString(itoa(broken_road_rep_price, str, 10));
+        char all_str[20];
+        char br_str[20];
+        sprintf(all_str, "%d", all_road_rep_price);
+        sprintf(br_str, "%d", broken_road_rep_price);
+        spr->rep_all_r_price.setString(all_str);
+        spr->rep_br_price.setString(br_str);
     }
 
     void repair_broken_roads(Player *player){

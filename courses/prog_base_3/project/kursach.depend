@@ -388,21 +388,27 @@
 1459336721 c:\users\user\desktop\kursach\menu.h
 	<SFML/Graphics.hpp>
 
-1465574377 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\main.cpp
+1465613555 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"menu.h"
+	"sqlite3.h"
 
 1464681070 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\menu.h
 	<SFML/Graphics.hpp>
 
-1465570027 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\menu.cpp
+1465617282 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\menu.cpp
 	<SFML/Graphics.hpp>
+	<iostream>
 	"game.h"
+	"score.h"
+	"pre_game.h"
 
-1465569001 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.h
+1465605242 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\roads.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
+	<iostream>
+	<cstdlib>
 	"textures.h"
 	"city.h"
 
@@ -421,7 +427,7 @@
 1465562721 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\view.h
 	<SFML/Graphics.hpp>
 
-1465569048 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\game.cpp
+1465613721 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\game.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<math.h>
@@ -433,6 +439,7 @@
 	"menu.h"
 	"view.h"
 	"cars.h"
+	"pre_game.h"
 
 1464681070 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\game.h
 	<SFML/Graphics.hpp>
@@ -510,15 +517,16 @@
 	"roads.h"
 	"house.h"
 
-1465569040 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\city.h
+1465603778 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\city.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<math.h>
+	<cstdlib>
 	"textures.h"
 	"roads.h"
 	"house.h"
 
-1465562908 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\house.h
+1465613849 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\house.h
 	<cstdlib>
 
 1465553866 c:\users\Стас\desktop\samokh-52\courses\prog_base_3\project\cars.h
@@ -531,13 +539,12 @@
 	"car.h"
 	"textures.h"
 
-1465557466 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\cars.h
+1465605194 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\cars.h
 	<SFML/Graphics.hpp>
 	<SFML/Window.hpp>
 	<iostream>
 	"roads.h"
 	"house.h"
-	"city.h"
 	"car.h"
 	"textures.h"
 
@@ -575,4 +582,44 @@
 	<iostream>
 	"cars.h"
 	"car.h"
+
+1465603512 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\pre_game.cpp
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<math.h>
+	<vector>
+	<list>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+
+1450774966 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\sqlite3.h
+	<stdarg.h>
+
+1465600068 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\pre_game.h
+
+1465617175 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\db.cpp
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"db.h"
+	"sqlite3.h"
+
+1465610617 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\db.h
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	"roads.h"
+
+1465617816 source:c:\users\user\desktop\samokh-52\courses\prog_base_3\project\score.cpp
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	"db.h"
+
+1465607586 c:\users\user\desktop\samokh-52\courses\prog_base_3\project\score.h
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
 

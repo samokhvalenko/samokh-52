@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "view.h"
 #include "cars.h"
+#include "pre_game.h"
 
 #define car_start_pos_x 250
 #define car_start_pos_y 19
@@ -76,43 +77,25 @@ void side_panel_move(Sprites *spr, time_t x, time_t y, View &view, Player *playe
 }
 
 void game_start(RenderWindow &window){
+
+    //name_enter(window);
+    std::string name = name_enter(window);
+    if(name == "escape_code")
+        return;
+    Player *player = new Player(name);
+
     Font font;
 
     std::string str;
     String text;
     font.loadFromFile("arial.ttf");
-    Text text_t("somth", font, 30);
-    //text_t.setFont(font);
-    //text_t.setCharacterSize(30);
-    text_t.setColor(Color::Black);
-    text_t.setPosition(100, 100);
 
-    std::string s;
-
-    while(window.isOpen()){
-
-        sf::Event event;
-        while (window.pollEvent(event)){
-            if (event.type == sf::Event::Closed)
-                window.close();
-            if (event.type == sf::Event::TextEntered){
-                if(event.KeyPressed == sf::Keyboard::BackSpace && s.size()!=0){
-                    //s.pop_back();
-                    std::cout << s << std::endl;
-                }
-                else if (event.text.unicode < 128) {
-                    s.push_back((char)event.text.unicode);
-                    std::cout << s << std::endl;
-                }
-            }
-        }
-    }
 
     Clock clock;
 
     Vector2f net_pos;
 
-    Player *player = new Player("Stas");
+    //Player *player = new Player("Stas");
     player->cash_t.setFont(font);
     player->cash_t2.setFont(font);
     player->t_name.setFont(font);
@@ -149,7 +132,7 @@ void game_start(RenderWindow &window){
     Vector2f localPosf;
     float distance = 0, x_mov, y_mov;
     view.reset(sf::FloatRect(0, 0, screen_width, screen_heigh));
-    bool isMove = false;
+    bool isMove = false, rep_flag = false;
 
     spr->rep_br.setFont(font);
     spr->rep_all_r.setFont(font);
@@ -224,15 +207,21 @@ void game_start(RenderWindow &window){
                 std::cout << "\nThird car";
                 buy_flag = true;
             }
-        if(!Mouse::isButtonPressed(Mouse::Left))
+        if(!Mouse::isButtonPressed(Mouse::Left) && buy_flag)
             buy_flag = false;
         //cars
 
-        if(Mouse::isButtonPressed(Mouse::Left) && spr->is_br_road_rep(localPosf))
+        if(Mouse::isButtonPressed(Mouse::Left) && spr->is_br_road_rep(localPosf) && !rep_flag){
             roads->repair_broken_roads(player);
+            rep_flag = true;
+        }
 
-        if(Mouse::isButtonPressed(Mouse::Left) && spr->is_all_road_rep(localPosf))
+        if(Mouse::isButtonPressed(Mouse::Left) && spr->is_all_road_rep(localPosf) && !rep_flag){
             roads->repair_all_roads(player);
+            rep_flag = true;
+        }
+        if(!Mouse::isButtonPressed(Mouse::Left) && rep_flag)
+            rep_flag = false;
 
         if(Mouse::isButtonPressed(Mouse::Left) && !roads->is_road(localPosf, OTHER))
             spr->road_selected = false;
@@ -307,7 +296,7 @@ void drag_n_drop(RenderWindow &window, Roads* roads, Houses * houses, Sprites *s
             while (window.pollEvent(event))
                 if (event.type == Event::Closed)
                     window.close();
-            if (!flag && Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, road_width) && !roads->is_road(Vector2f(X, Y), OTHER) && !roads->is_road(pos, OTHER) && !houses->is_house(pos, IS_ROAD)){
+            if (!flag && Mouse::isButtonPressed(Mouse::Right) && !spr->isSidepanel(pos, road_width) && !roads->is_road(Vector2f(X, Y), OTHER) && !roads->is_road(pos, OTHER) && !houses->is_house(Vector2f(pos.x, pos.y + 80), IS_ROAD)){
                 bool near_roads = false;
 
                 is_road_up = roads->is_road(Vector2f(X, Y - road_heigh), OTHER);

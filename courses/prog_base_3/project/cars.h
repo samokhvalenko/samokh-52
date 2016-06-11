@@ -7,7 +7,6 @@
 
 #include "roads.h"
 #include "house.h"
-#include "city.h"
 #include "car.h"
 #include "textures.h"
 #define PI 3.1415

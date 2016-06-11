@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <math.h>
+#include <cstdlib>
 
 #include "textures.h"
 #include "roads.h"
@@ -96,7 +97,7 @@ public:
     Text cash_t;
     Text cash_t2;
     Text t_name;
-    long int score;
+    int score;
     std::string name;
     Player(std::string p_name){
         name = p_name;
@@ -124,7 +125,8 @@ public:
 
     void update(){
         char n_str[20];
-        cash_t2.setString(itoa(cash, n_str, 10));
+        sprintf(n_str,"%d",cash);
+        cash_t2.setString(n_str);
 
     }
 };

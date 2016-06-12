@@ -20,6 +20,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
+					<Add library="sfml-audio-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
 				</Linker>
@@ -36,6 +37,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="sfml-graphics-s-d" />
+					<Add library="sfml-audio-s-d" />
 					<Add library="sfml-window-s-d" />
 					<Add library="sfml-system-s-d" />
 				</Linker>
@@ -49,21 +51,23 @@
 			<Add directory="C:/Users/User/Desktop/samokh-52/courses/prog_base_3/project" />
 		</Compiler>
 		<Linker>
-			<Add library="C:\Users\User\Desktop\samokh-52\courses\prog_base_3\project\libsqlite3.a" />
+			<Add library="C:\Users\Стас\Desktop\samokh-52\courses\prog_base_3\project\libsqlite3.a" />
 			<Add directory="C:/Program Files/SFML-2.3.2/lib" />
 		</Linker>
 		<Unit filename="car.h" />
 		<Unit filename="cars.cpp" />
 		<Unit filename="cars.h" />
-		<Unit filename="city.h" />
 		<Unit filename="db.cpp" />
 		<Unit filename="db.h" />
+		<Unit filename="factory.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
+		<Unit filename="gas_station.h" />
 		<Unit filename="house.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
+		<Unit filename="player.h" />
 		<Unit filename="pre_game.cpp" />
 		<Unit filename="pre_game.h" />
 		<Unit filename="roads.h" />

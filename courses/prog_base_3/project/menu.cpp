@@ -86,15 +86,12 @@ void menu(RenderWindow &window){
 		if (IntRect(100, 210, 45, 30).contains(Mouse::getPosition(window))){
             exit.setCharacterSize(40);
             if (Mouse::isButtonPressed(Mouse::Left)){
-                //std::cout << "\nExit";
                 window.close();
             }
-
         }
 
         if(Keyboard::isKeyPressed(Keyboard::Escape) && !escape_flag){
             fflush(stdout);
-            //std::cout << "\nExit escape";
             window.close();
             return;
         }

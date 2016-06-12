@@ -6,11 +6,11 @@
 #include <iostream>
 #include <cstdlib>
 #include "textures.h"
-#include "city.h"
+#include "player.h"
 #define road_heigh 40
 #define road_width 37
 
-enum status_r {FOR_CAR = 1, OTHER = 2, IS_REPAIRING = 3, NOTH = 0};
+enum status_r {FOR_CAR = 1, OTHER = 2, IS_REPAIRING = 3, NOTH = 0, FACT_R = 4};
 
 class Road{
 public:
@@ -57,7 +57,6 @@ public:
 
 class Roads{
 public:
-    int roads_count;
     int broken_road_rep_price;
     int all_road_rep_price;
     std::vector< Road *> roads;
@@ -84,20 +83,22 @@ public:
     }
 
     void repair_broken_roads(Player *player){
-
-        for(int i = 0; i < roads.size(); i++){
-            if(roads[i]->state_b == 0)
-                roads[i]->state = 100;
+        if(player->cash >= broken_road_rep_price){
+            for(int i = 0; i < roads.size(); i++){
+                if(roads[i]->state_b == 0)
+                    roads[i]->state = 100;
+            }
             player->cash-=broken_road_rep_price;
         }
     }
 
     void repair_all_roads(Player *player){
-
-        for(int i = 0; i < roads.size(); i++){
-            roads[i]->state = 100;
+        if(player->cash >= all_road_rep_price){
+            for(int i = 0; i < roads.size(); i++){
+                roads[i]->state = 100;
+            }
+            player->cash-=all_road_rep_price;
         }
-        player->cash-=all_road_rep_price;
     }
 
     void draw_roads(RenderWindow &window){
@@ -117,7 +118,6 @@ public:
             }
         }
 
-        broken_roads_price = broken_roads_price;
         broken_road_rep_price = broken_roads_price;
     }
 
@@ -145,13 +145,13 @@ public:
                 if(status == IS_REPAIRING){
                     return i;
                 }
-                if(status == OTHER)
+                else if(status == OTHER)
                     return true;
-                if(status == FOR_CAR && roads[i]->state_b == 1)
+                else if(status == FOR_CAR && roads[i]->state_b == 1)
                     return true;
             }
         }
-        return 0;
+        return false;
     }
 
     bool check_roads(Vector2f pos){

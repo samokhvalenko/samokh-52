@@ -69,5 +69,5 @@ void show_scores(RenderWindow &window){
 }
 
 bool cmp1(Player* p1, Player* p2){
-        return p1->score < p2->score;
+        return p1->score > p2->score;
 }

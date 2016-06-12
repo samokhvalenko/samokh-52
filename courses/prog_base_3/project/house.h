@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 
-enum status {IS_ROAD = 1, IS_HOUSE = 2, IS_PLAYER = 3, IS_MOUSE = 4};
+enum status {IS_ROAD = 1, IS_HOUSE = 2, IS_PLAYER = 3, IS_MOUSE = 4, FACTORY = 5, GAS = 6};
 
 
 
@@ -22,17 +22,13 @@ public:
 
     }
 
-    House(){
-    }
 };
 
 bool cmp(House* h1, House* h2);
 
 class Houses{
 public:
-    int houses_count;
     std::vector< House *> houses;
-    Texture house_texture;
 
     Houses(){
 
@@ -51,27 +47,71 @@ public:
 
     bool is_house(Vector2f pos, status status){
 
-    if(status == IS_HOUSE){
-        pos.y = pos.y + 30;
-        pos.x = pos.x + 55;
-        for(int i = 0; i < houses.size(); i++){
-            if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
-                return true;
+        if(status == IS_HOUSE){
+            pos.y = pos.y + 30;
+            pos.x = pos.x + 55;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+            pos.x = pos.x - 55;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+            pos.y = pos.y - 30;
+            pos.x = pos.x + 90;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
         }
-        pos.x = pos.x - 55;
-        for(int i = 0; i < houses.size(); i++){
-            if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
-                return true;
+        if(status == FACTORY){
+            pos.y = pos.y + 50;
+            pos.x = pos.x + 106;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+            pos.x = pos.x - 106;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+            pos.y = pos.y - 50;
+            pos.x = pos.x - 30;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
         }
-    }
-    else{
-        for(int i = 0; i < houses.size(); i++){
-            if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
-                return true;
+        if(status == GAS){
+            pos.y = pos.y + 50;
+            pos.x = pos.x + 120;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+            pos.x = pos.x - 120;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+            pos.y = pos.y - 50;
+            pos.x = pos.x - 30;
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
         }
-    }
+        else{
+            for(int i = 0; i < houses.size(); i++){
+                if(houses[i]->house_sprite.getGlobalBounds().contains(pos))
+                    return true;
+            }
+        }
 
-    return false;
+        return false;
 }
 };
 

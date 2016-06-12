@@ -29,11 +29,15 @@ void db_free(db_t * self) {
 int db_insert_player(db_t * self, char * name, int score) {
     int newStudentId = -1;
     sqlite3_stmt * stmt = NULL;
+    int rc;
     const char * sqlQuery = "INSERT INTO Players VALUES ( ?, ?);";
-    sqlite3_prepare_v2(self->db, sqlQuery, strlen(sqlQuery), &stmt, 0);
-    sqlite3_bind_text(stmt, 0, name, strlen(name), NULL);
-    sqlite3_bind_int(stmt, 1, score);
-    int rc = sqlite3_step(stmt);
+    std::cout << "\nName" << name;
+    std::cout << "\nScore" << score;
+    rc = sqlite3_prepare_v2(self->db, sqlQuery, strlen(sqlQuery) + 1, &stmt, 0);
+    printf("\n THAT IS RC PREP V2: %i\n", rc);
+    sqlite3_bind_text(stmt, 1, name, strlen(name), NULL);
+    sqlite3_bind_int(stmt, 2, score);
+    rc = sqlite3_step(stmt);
     printf("\n THAT IS RC: %i\n", rc);
     if (SQLITE_OK == rc) {
         printf("ALL IS OK");
@@ -56,8 +60,8 @@ void _fill_player(sqlite3_stmt * stmt, Player * player) {
     int score = sqlite3_column_int(stmt, 1);
     player->name = convert((char *)name);
     player->score = score;
-    std::cout << "\nPlayer name: " << player->name;
-    std::cout << "\nPlayer score: " << player->score;
+    //std::cout << "\nPlayer name: " << player->name;
+    //std::cout << "\nPlayer score: " << player->score;
 }
 
 int db_count_players(db_t * self) {
@@ -79,7 +83,7 @@ void db_get_players(db_t * self, std::vector <Player *> *players) {
 	const char * sqlQuery = "SELECT * FROM Players;";
     sqlite3_stmt * stmt = NULL;
     rc = sqlite3_prepare_v2(self->db, sqlQuery, strlen(sqlQuery) + 1, &stmt, 0);
-    std::cout << "\nReturn code sqlite3_prepare_v2: " << rc;
+    //std::cout << "\nReturn code sqlite3_prepare_v2: " << rc;
 	for (int i = 0; i < db_count_players(self); i++)
 	{
 		Player * player = new Player("");

@@ -46,7 +46,7 @@ std::string name_enter(RenderWindow &window){
     too_many_letters.setColor(Color::Red);
     too_many_letters.setPosition(730, 300);
 
-    std::string s;
+    std::string s = "";
 
     while(window.isOpen()){
 

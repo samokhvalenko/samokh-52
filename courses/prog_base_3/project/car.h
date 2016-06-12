@@ -9,8 +9,9 @@
 #include "house.h"
 #include "textures.h"
 #include "cars.h"
+#include "gas_station.h"
 #define PI 3.1415
-#define road_destroying_speed 7
+
 
 using namespace sf;
 
@@ -29,10 +30,12 @@ private:
 	int road_is_riding;
 	int type;
 	int car_cash;
-	bool flag, is_road_l, is_road_r, is_road_d, house_flag, road_flag, road_rided;
+	bool flag, is_road_l, is_road_r, is_road_d, house_flag, road_flag, road_rided, is_road_fr, gasst_flag;
 public:
     Sprite sprite;
+    float oil;
 	Car( float X, float Y, int car_type, Sprites *spr){
+	    oil = 100;
         isMove = false;
 		x = X; y = Y;
 		mov_v = Vector2f(1, 0);
@@ -59,7 +62,7 @@ public:
         angle = 0;
 	}
 
-	void update(Roads * roads, Houses *houses, Player *player, Cars *cars);
+	void update(Roads * roads, Houses *houses, Player *player, Cars *cars, Gas_stations *stations);
 
 
 	void set_mov(Vector2f pos){

@@ -10,7 +10,7 @@
 #include "car.h"
 #include "textures.h"
 #define PI 3.1415
-#define road_destroying_speed 7
+#define road_destroying_speed 3
 
 using namespace sf;
 
@@ -21,9 +21,9 @@ public:
 
     }
 
-    void update(Roads * roads, Houses *houses, Player *player, Cars *cars_c){
+    void update(Roads * roads, Houses *houses, Player *player, Cars *cars_c, Gas_stations *stations){
         for(int i = 0; i < cars.size(); i++)
-            cars[i]->update(roads, houses, player, cars_c);
+            cars[i]->update(roads, houses, player, cars_c, stations);
 
     }
 
@@ -34,7 +34,7 @@ public:
     }
 
     void buy_car(int type, Sprites *spr){
-        cars.push_back(new Car(19, 250, type, spr));
+        cars.push_back(new Car(240, 250, type, spr));
     }
 
     bool is_car(Vector2f pos);

@@ -10,7 +10,7 @@ typedef struct db_s db_t;
 
 db_t * db_new(const char * dbFile);
 void db_free(db_t * self);
-int db_insert_player(db_t * self, std::string name, int score);
+int db_insert_player(db_t * self, char * name, int score);
 void db_get_players(db_t * self, std::vector <Player *> *players);
 
 #endif // DB_H_INCLUDED
